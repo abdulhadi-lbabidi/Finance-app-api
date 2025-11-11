@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Invoice extends Model
+{
+    /** @use HasFactory<\Database\Factories\InvoiceFactory> */
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'desc',
+        'amount',
+        'finance_item_id'
+    ];
+
+    public function invoiceable()
+    {
+        return $this->morphTo();
+    }
+
+    public function financeitem()
+    {
+        return $this->belongsTo(FinanceItem::class);
+    }
+    public function invoiceitem()
+    {
+        return $this->hasMany(InvoiceItem::class);
+    }
+
+        public function images()
+    {
+        return $this->morphMany(Invoice::class,'imageable');
+    }
+
+
+}
