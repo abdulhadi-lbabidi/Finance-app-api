@@ -14,7 +14,9 @@ class Invoice extends Model
         'name',
         'desc',
         'amount',
-        'finance_item_id'
+        'finance_item_id',
+        'invoiceable_id',
+        'invoiceable_type',
     ];
 
     public function invoiceable()
@@ -31,10 +33,8 @@ class Invoice extends Model
         return $this->hasMany(InvoiceItem::class);
     }
 
-        public function images()
+    public function images()
     {
-        return $this->morphMany(Invoice::class,'imageable');
+        return $this->morphMany(Invoice::class, 'imageable');
     }
-
-
 }
