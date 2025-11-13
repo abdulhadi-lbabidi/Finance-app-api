@@ -19,6 +19,7 @@ class Invoice extends Model
         'invoiceable_type',
     ];
 
+
     public function invoiceable()
     {
         return $this->morphTo();
@@ -26,7 +27,7 @@ class Invoice extends Model
 
     public function financeitem()
     {
-        return $this->belongsTo(FinanceItem::class);
+        return $this->belongsTo(FinanceItem::class, 'finance_item_id', 'id');
     }
     public function invoiceitem()
     {

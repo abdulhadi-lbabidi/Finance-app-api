@@ -14,7 +14,7 @@ class InvoiceController extends Controller
         return response()->json(
             [
                 'invoices' =>
-                Invoice::with('financeItem')->orderByRaw('updated_at - created_at DESC')
+                Invoice::with('financeitem:id,name')->orderBy('updated_at', 'desc')
                     ->get()
             ]
         );

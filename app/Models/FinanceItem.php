@@ -16,6 +16,6 @@ class FinanceItem extends Model
 
     public function invoice()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->hasMany(Invoice::class,);
     }
 }
