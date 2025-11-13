@@ -11,7 +11,13 @@ class InvoiceController extends Controller
 {
     public function index()
     {
-        return response()->json(['invoices' => Invoice::with('financeItem')->get()]);
+        return response()->json(
+            [
+                'invoices' =>
+                Invoice::with('financeItem')->orderByRaw('updated_at - created_at DESC')
+                    ->get()
+            ]
+        );
     }
 
     public function store(CreateInvoiceRequest $request)
