@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->integer('price');
             $table->integer('finalprice')->nullable();
+            $table->boolean('payed');
             $table->foreignId('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->timestamps();
         });

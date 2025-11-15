@@ -11,12 +11,15 @@ use App\Http\Controllers\Api\FinanceItemController;
 use App\Http\Controllers\Api\InnerTransactionController;
 use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\InvoiceController;
+use App\Http\Controllers\API\InvoiceItemController;
+use App\Http\Controllers\Api\LogicPaysController;
 use App\Http\Controllers\Api\MoneyTransfareController;
 use App\Http\Controllers\Api\NoteController;
 use App\Http\Controllers\Api\OuterTransactionController;
 use App\Http\Controllers\Api\PhoneController;
 use App\Http\Controllers\Api\ReportsController;
 use App\Http\Controllers\Api\SocialmediaTypeController;
+use App\Http\Controllers\Api\TechPaysController;
 use App\Http\Controllers\Api\TresureController;
 use App\Http\Controllers\Api\WorkshopController;
 use App\Http\Controllers\Api\WorkshopEmployeeController;
@@ -61,6 +64,12 @@ Route::get('/data/tresurefund/{id}', [TresureController::class, 'getTresureFunds
 
 // Invoices
 Route::apiResource('/data/invoices', InvoiceController::class);
+// TechPays
+Route::apiResource('/data/tech-pays', TechPaysController::class);
+// LogicPays
+Route::apiResource('/data/logic-pays', LogicPaysController::class);
+// InvoiceItems
+Route::apiResource('/data/invoice-items', InvoiceItemController::class);
 
 
 // Reports

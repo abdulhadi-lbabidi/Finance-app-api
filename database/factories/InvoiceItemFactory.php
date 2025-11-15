@@ -17,15 +17,16 @@ class InvoiceItemFactory extends Factory
      */
     public function definition(): array
     {
-        $amount = fake()->numberBetween(1,10);
-        $price = fake()->numberBetween(1,2);
+        $amount = fake()->numberBetween(1, 10);
+        $price = fake()->numberBetween(1, 2);
         return [
-            'name'=>fake()->name,
-            'desc'=>fake()->text(),
-            'amount'=>$amount,
-            'price'=>$price,
-            'finalprice'=>$amount * $price,
-            'invoice_id'=> Invoice::all()->random()->id
+            'name' => fake()->name,
+            'desc' => fake()->text(),
+            'amount' => $amount,
+            'payed' => fake()->boolean,
+            'price' => $price,
+            'finalprice' => $amount * $price,
+            'invoice_id' => Invoice::all()->random()->id
         ];
     }
 }

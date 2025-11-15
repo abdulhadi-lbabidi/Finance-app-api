@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Invoices\CreateInvoiceRequest;
 use App\Http\Requests\Invoices\UpdateInvoiceRequest;
-use App\Models\Invoice;
 use Illuminate\Http\Request;
+use App\Models\Invoice;
 
 class InvoiceController extends Controller
 {
@@ -16,7 +16,7 @@ class InvoiceController extends Controller
         $query = Invoice::with('financeitem:id,name')->orderBy('updated_at', 'desc');
 
         if ($type) {
-            $query->where('invoiceable_type', "App\\Models\\" . ucfirst($type));
+            $query->where('invoiceable_type', lcfirst($type));
         }
         $invoices = $query->get();
         return response()->json(['invoices' => $invoices]);

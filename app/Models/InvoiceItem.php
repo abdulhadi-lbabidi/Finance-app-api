@@ -14,17 +14,27 @@ class InvoiceItem extends Model
         'name',
         'desc',
         'amount',
+        'payed',
         'price',
         'finalprice',
         'invoice_id'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($techPay) {
+            $techPay->finalprice = $techPay->amount * $techPay->price;
+        });
+
+        static::updating(function ($techPay) {
+            $techPay->finalprice = $techPay->amount * $techPay->price;
+        });
+    }
+
     public function invoice()
     {
         return $this->belongsTo(Invoice::class);
     }
-
-
-
-
 }
