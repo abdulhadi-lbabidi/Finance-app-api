@@ -6,18 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Invoices\CreateInvoiceRequest;
 use App\Http\Requests\Invoices\UpdateInvoiceRequest;
 use App\Models\Invoice;
+use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(
-            [
-                'invoices' =>
-                Invoice::with('financeitem:id,name')->orderBy('updated_at', 'desc')
-                    ->get()
-            ]
-        );
+        $type = $request->query('type');
+        $query = Invoice::with('financeitem:id,name')->orderBy('updated_at', 'desc');
+
+        if ($type) {
+            $query->where('invoiceable_type', "App\\Models\\" . ucfirst($type));
+        }
+        $invoices = $query->get();
+        return response()->json(['invoices' => $invoices]);
     }
 
     public function store(CreateInvoiceRequest $request)
