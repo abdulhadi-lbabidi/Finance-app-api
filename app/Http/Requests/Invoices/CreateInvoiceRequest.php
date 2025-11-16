@@ -27,7 +27,7 @@ class CreateInvoiceRequest extends FormRequest
             'amount' => 'required|numeric|min:1',
             'finance_item_id' => 'required|exists:finance_items,id',
             'invoiceable_id' => 'required|integer',
-            'invoiceable_type' => 'required|string|in:App\Models\InnerTransaction,App\Models\OuterTransaction',
+            'invoiceable_type' => 'required|string|in:innerTransaction,outerTransaction',
         ];
     }
 }

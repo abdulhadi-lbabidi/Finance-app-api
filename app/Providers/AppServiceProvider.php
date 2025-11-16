@@ -33,8 +33,8 @@ class AppServiceProvider extends ServiceProvider
             'customer' => Customer::class,
             'admin' => Admin::class,
             'workshop' => Workshop::class,
-            'innertransaction' => InnerTransaction::class,
-            'outertransaction' => OuterTransaction::class,
+            'innerTransaction' => InnerTransaction::class,
+            'outerTransaction' => OuterTransaction::class,
             'LogisticTeam' => LogisticTeam::class,
             'TechnicalTeam' => TechnicalTeam::class,
         ]);
