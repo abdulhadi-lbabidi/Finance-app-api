@@ -15,7 +15,10 @@ class LogicPaysController extends Controller
     {
         return response()->json(
             [
-                'logicPay' => LogiPay::with('logisticteam')->get()
+                'logicPay' =>
+                LogiPay::with('logisticteam')
+                    ->orderBy('updated_at', 'desc')
+                    ->get(),
             ]
         );
     }

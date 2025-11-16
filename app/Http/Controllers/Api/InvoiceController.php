@@ -13,7 +13,8 @@ class InvoiceController extends Controller
     public function index(Request $request)
     {
         $type = $request->query('type');
-        $query = Invoice::with('financeitem:id,name')->orderBy('updated_at', 'desc');
+        $query = Invoice::with('financeitem:id,name')
+            ->orderBy('updated_at', 'desc');
 
         if ($type) {
             $query->where('invoiceable_type', lcfirst($type));
@@ -21,6 +22,7 @@ class InvoiceController extends Controller
         $invoices = $query->get();
         return response()->json(['invoices' => $invoices]);
     }
+
 
     public function store(CreateInvoiceRequest $request)
     {

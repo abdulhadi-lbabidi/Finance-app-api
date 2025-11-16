@@ -13,7 +13,7 @@ class InvoiceItemController extends Controller
     {
         return response()->json(
             [
-                'invoiceItems' => InvoiceItem::all()
+                'invoiceItems' => InvoiceItem::orderBy('updated_at', 'desc')->get()
             ]
         );
     }

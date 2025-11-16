@@ -13,7 +13,9 @@ class TechPaysController extends Controller
     {
         return response()->json(
             [
-                'techPays' => TechPay::with('technicalteam')->get()
+                'techPays' => TechPay::with('technicalteam')
+                    ->orderBy('updated_at', 'desc')
+                    ->get(),
             ]
         );
     }
