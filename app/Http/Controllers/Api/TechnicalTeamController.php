@@ -13,7 +13,7 @@ class TechnicalTeamController extends Controller
      */
     public function index()
     {
-        return response()->json(['technicalteam'=>TechnicalTeam::all()->load('techpays')]);
+        return response()->json(['technicalteam' => TechnicalTeam::all()]);
     }
 
     /**

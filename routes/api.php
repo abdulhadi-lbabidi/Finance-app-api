@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\OuterTransactionController;
 use App\Http\Controllers\Api\PhoneController;
 use App\Http\Controllers\Api\ReportsController;
 use App\Http\Controllers\Api\SocialmediaTypeController;
+use App\Http\Controllers\Api\TechnicalTeamController;
 use App\Http\Controllers\Api\TechPaysController;
 use App\Http\Controllers\Api\TresureController;
 use App\Http\Controllers\Api\WorkshopController;
@@ -61,6 +62,8 @@ Route::get('/data/customer/tresure/{id}', [TresureController::class, 'getcustome
 Route::get('/data/employee/tresure/{id}', [TresureController::class, 'getemployeetresure']);
 Route::get('/data/tresurefund/{id}', [TresureController::class, 'getTresureFunds']);
 
+// TechnicalTeam
+Route::get('/data/technical-teams', [TechnicalTeamController::class, 'index']);
 
 // Invoices
 Route::apiResource('/data/invoices', InvoiceController::class);
