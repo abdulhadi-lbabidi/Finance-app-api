@@ -14,7 +14,7 @@ class LogisticTeamController extends Controller
      */
     public function index()
     {
-        return response()->json(['logisticteam'=>LogisticTeam::all()]);
+        return response()->json(['logisticteam' => LogisticTeam::all()]);
     }
 
     /**
@@ -23,10 +23,10 @@ class LogisticTeamController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => ['string','max:100','required'],
-            'phone' => ['string','max:100','required'],
-            'address' => ['string','max:100','required'],
-            'email' => ['email','required'],
+            'name' => ['string', 'max:100', 'required'],
+            'phone' => ['string', 'max:100', 'required'],
+            'address' => ['string', 'max:100', 'required'],
+            'email' => ['email', 'required'],
             'password' => ['required'],
         ]);
         DB::beginTransaction();
@@ -42,10 +42,7 @@ class LogisticTeamController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-
-    }
+    public function show(string $id) {}
 
     /**
      * Update the specified resource in storage.

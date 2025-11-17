@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\InvoiceController;
 use App\Http\Controllers\API\InvoiceItemController;
 use App\Http\Controllers\Api\LogicPaysController;
+use App\Http\Controllers\Api\LogisticTeamController;
 use App\Http\Controllers\Api\MoneyTransfareController;
 use App\Http\Controllers\Api\NoteController;
 use App\Http\Controllers\Api\OuterTransactionController;
@@ -64,6 +65,8 @@ Route::get('/data/tresurefund/{id}', [TresureController::class, 'getTresureFunds
 
 // TechnicalTeam
 Route::get('/data/technical-teams', [TechnicalTeamController::class, 'index']);
+// LogisticTeam
+Route::get('/data/logic-teams', [LogisticTeamController::class, 'index']);
 
 // Invoices
 Route::apiResource('/data/invoices', InvoiceController::class);
