@@ -26,12 +26,12 @@ class LogiPay extends Model
     {
         parent::boot();
 
-        static::creating(function ($techPay) {
-            $techPay->finalprice = $techPay->amount * $techPay->price;
+        static::creating(function ($logicPay) {
+            $logicPay->finalprice = $logicPay->amount * $logicPay->price;
         });
 
-        static::updating(function ($techPay) {
-            $techPay->finalprice = $techPay->amount * $techPay->price;
+        static::updating(function ($logicPay) {
+            $logicPay->finalprice = $logicPay->amount * $logicPay->price;
         });
     }
 
