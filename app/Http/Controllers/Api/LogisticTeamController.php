@@ -14,7 +14,7 @@ class LogisticTeamController extends Controller
      */
     public function index()
     {
-        return response()->json(['logisticteam' => LogisticTeam::all()]);
+        return response()->json(['logisticteams' => LogisticTeam::all()]);
     }
 
     /**
