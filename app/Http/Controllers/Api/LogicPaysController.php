@@ -13,14 +13,16 @@ class LogicPaysController extends Controller
 
     public function index()
     {
-        return response()->json(
-            [
-                'logicPays' =>
-                LogiPay::with('logisticteam')
-                    ->orderBy('updated_at', 'desc')
-                    ->get(),
-            ]
-        );
+        $logicPays = LogiPay::with('logisticteam')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        $totalFinalPrice = $logicPays->sum('finalprice');
+
+        return response()->json([
+            'logicPays' => $logicPays,
+            'totalFinalPrice' => $totalFinalPrice,
+        ]);
     }
     public function store(CreateLogicPaysRequest $request)
     {

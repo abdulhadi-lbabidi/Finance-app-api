@@ -28,6 +28,9 @@ class CreateInvoiceRequest extends FormRequest
             'finance_item_id' => 'required|exists:finance_items,id',
             'invoiceable_id' => 'required|integer',
             'invoiceable_type' => 'required|string|in:innerTransaction,outerTransaction',
+
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+
         ];
     }
 }

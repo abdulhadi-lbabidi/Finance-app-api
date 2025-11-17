@@ -11,14 +11,18 @@ class TechPaysController extends Controller
 {
     public function index()
     {
-        return response()->json(
-            [
-                'techPays' => TechPay::with('technicalteam')
-                    ->orderBy('updated_at', 'desc')
-                    ->get(),
-            ]
-        );
+        $techPays = TechPay::with('technicalteam')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        $totalFinalPrice = $techPays->sum('finalprice');
+
+        return response()->json([
+            'techPays' => $techPays,
+            'totalFinalPrice' => $totalFinalPrice,
+        ]);
     }
+
     public function store(CreateTeachPaysRequest $request)
     {
         $data = $request->validated();

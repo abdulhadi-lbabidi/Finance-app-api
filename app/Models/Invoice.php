@@ -36,6 +36,6 @@ class Invoice extends Model
 
     public function images()
     {
-        return $this->morphMany(Invoice::class, 'imageable');
+        return $this->morphMany(Image::class, 'imageable');
     }
 }

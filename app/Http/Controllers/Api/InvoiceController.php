@@ -30,6 +30,12 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::create($data);
 
+        if ($path = $request->file('image')?->storePublicly('invoices', 'public')) {
+            $invoice->images()->create([
+                'url' => $path
+            ]);
+        }
+
         return response()->json([
             'message' => 'Invoice created successfully',
             'invoice' => $invoice

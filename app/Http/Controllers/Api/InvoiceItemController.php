@@ -9,14 +9,20 @@ use App\Models\InvoiceItem;
 
 class InvoiceItemController extends Controller
 {
+
     public function index()
     {
-        return response()->json(
-            [
-                'invoiceItems' => InvoiceItem::orderBy('updated_at', 'desc')->get()
-            ]
-        );
+        $invoiceItems = InvoiceItem::orderBy('updated_at', 'desc')
+            ->get();
+
+        $totalFinalPrice = $invoiceItems->sum('finalprice');
+
+        return response()->json([
+            'invoiceItems' => $invoiceItems,
+            'totalFinalPrice' => $totalFinalPrice,
+        ]);
     }
+
     public function store(CreateInvoiceItemRequest $request)
     {
         $data = $request->validated();
