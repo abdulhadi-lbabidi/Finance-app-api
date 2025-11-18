@@ -27,7 +27,9 @@ use App\Http\Controllers\Api\WorkshopController;
 use App\Http\Controllers\Api\WorkshopEmployeeController;
 use App\Http\Controllers\Api\WorkshopLogisticController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -72,6 +74,9 @@ Route::get('/data/logic-teams', [LogisticTeamController::class, 'index']);
 Route::apiResource('/data/invoices', InvoiceController::class);
 Route::post('/data/invoices-image/{invoice}', [InvoiceController::class, 'invoiceImage']);
 Route::get('/data/invoices-images/{type}', [InvoiceController::class, 'getAllInvoicesImages']);
+Route::delete('/data/invoices-image/{image}', [InvoiceController::class, 'deleteInvoiceImage']);
+Route::get('/data/invoices-image/{image}', [InvoiceController::class, 'showInvoiceImage']);
+Route::get('/data/invoices-images/download/{fileName}', [InvoiceController::class, 'downloadInvoicesImages']);
 // TechPays
 Route::apiResource('/data/tech-pays', TechPaysController::class);
 // LogicPays

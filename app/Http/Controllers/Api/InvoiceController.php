@@ -8,6 +8,8 @@ use App\Http\Requests\Invoices\UpdateInvoiceRequest;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -74,5 +76,33 @@ class InvoiceController extends Controller
             lcfirst($type)
         )->get();
         return response()->json(['invoices' => $invoices]);
+    }
+
+    public function showInvoiceImage(Image $image)
+    {
+        return response()->json(['image' => $image]);
+    }
+
+    public function deleteInvoiceImage(Image $image)
+    {
+        $filePath = str_replace(asset('storage') . '/', '', $image->url);
+
+        if (Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);
+        }
+
+        $image->delete();
+
+        return response()->json(['message' => 'Image deleted successfully']);
+    }
+
+
+    public function downloadInvoicesImages($fileName)
+    {
+        $filePath = 'invoices/' . $fileName;
+        if (!Storage::disk('public')->exists($filePath)) {
+            return response()->json(['error' => 'File not found'], 404);
+        }
+        return Storage::disk('public')->download($filePath);
     }
 }
