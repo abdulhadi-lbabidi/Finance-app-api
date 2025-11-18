@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Invoices\CreateInvoiceRequest;
 use App\Http\Requests\Invoices\UpdateInvoiceRequest;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 
@@ -30,12 +31,6 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::create($data);
 
-        if ($path = $request->file('image')?->storePublicly('invoices', 'public')) {
-            $invoice->images()->create([
-                'url' => $path
-            ]);
-        }
-
         return response()->json([
             'message' => 'Invoice created successfully',
             'invoice' => $invoice
@@ -57,5 +52,27 @@ class InvoiceController extends Controller
     {
         $invoice->delete();
         return response()->json(['message' => 'Invoice deleted successfully']);
+    }
+
+    public function invoiceImage(Request $request, Invoice $invoice)
+    {
+        $request->validate([
+            'image' => 'required|mimes:jpg,jpeg,png,webp,pdf',
+        ]);
+        if ($path = $request->file('image')?->storePublicly('invoices', 'public')) {
+            $invoice->images()->create(['url' => $path]);
+        }
+        return response()->json([
+            'message' => 'Image uploaded successfully',
+            'path' => asset('storage/' . $path),
+        ]);
+    }
+    public function getAllInvoicesImages($type)
+    {
+        $invoices = Image::where(
+            'imageable_type',
+            lcfirst($type)
+        )->get();
+        return response()->json(['invoices' => $invoices]);
     }
 }

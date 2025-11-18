@@ -70,6 +70,8 @@ Route::get('/data/logic-teams', [LogisticTeamController::class, 'index']);
 
 // Invoices
 Route::apiResource('/data/invoices', InvoiceController::class);
+Route::post('/data/invoices-image/{invoice}', [InvoiceController::class, 'invoiceImage']);
+Route::get('/data/invoices-images/{type}', [InvoiceController::class, 'getAllInvoicesImages']);
 // TechPays
 Route::apiResource('/data/tech-pays', TechPaysController::class);
 // LogicPays
