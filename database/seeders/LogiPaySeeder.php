@@ -13,6 +13,6 @@ class LogiPaySeeder extends Seeder
      */
     public function run(): void
     {
-        LogiPay::factory()->count(50)->create();
+        // LogiPay::factory()->count(50)->create();
     }
 }

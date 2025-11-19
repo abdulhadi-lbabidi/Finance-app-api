@@ -13,6 +13,6 @@ class TechPaySeeder extends Seeder
      */
     public function run(): void
     {
-        TechPay::factory()->count(100)->create();
+        // TechPay::factory()->count(100)->create();
     }
 }

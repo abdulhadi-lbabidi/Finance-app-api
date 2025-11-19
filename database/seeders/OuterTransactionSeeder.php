@@ -13,16 +13,16 @@ class OuterTransactionSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 20; $i++) {
-            $temp_out = OuterTransaction::factory()->create();
-            for ($j = 0; $j < 10; $j++) {
-                $temp_out->invoices()->create([
-                    'name' => fake()->name(),
-                    'desc' => fake()->name(),
-                    'amount' => fake()->numberBetween(100, 1000),
-                    'finance_item_id' => fake()->numberBetween(1, 5),
-                ]);
-            }
-        }
+        // for ($i = 0; $i < 20; $i++) {
+        //     $temp_out = OuterTransaction::factory()->create();
+        //     for ($j = 0; $j < 10; $j++) {
+        //         $temp_out->invoices()->create([
+        //             'name' => fake()->name(),
+        //             'desc' => fake()->name(),
+        //             'amount' => fake()->numberBetween(100, 1000),
+        //             'finance_item_id' => fake()->numberBetween(1, 5),
+        //         ]);
+        //     }
+        // }
     }
 }

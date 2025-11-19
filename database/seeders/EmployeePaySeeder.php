@@ -15,9 +15,9 @@ class EmployeePaySeeder extends Seeder
      */
     public function run(): void
     {
-        EmployeePay::factory()->count(30)->create();
-        EmployeeDiscount::factory()->count(20)->create();
-        EmployeeReward::factory()->count(42)->create();
+        // EmployeePay::factory()->count(30)->create();
+        // EmployeeDiscount::factory()->count(20)->create();
+        // EmployeeReward::factory()->count(42)->create();
 
     }
 }
