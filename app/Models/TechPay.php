@@ -20,20 +20,39 @@ class TechPay extends Model
         'workshopname',
         'technical_team_id',
         'invoice_id',
+        "discount_value",
+        "discount_type",
     ];
+
 
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($techPay) {
-            $techPay->finalprice = $techPay->amount * $techPay->price;
+            $total = $techPay->amount * $techPay->price;
+
+            if ($techPay->discount_type === 'نسبة') {
+                $discount = $total * ($techPay->discount_value / 100);
+            } else {
+                $discount = $techPay->discount_value ?? 0;
+            }
+            $techPay->finalprice = $total - $discount;
         });
 
         static::updating(function ($techPay) {
-            $techPay->finalprice = $techPay->amount * $techPay->price;
+            $total = $techPay->amount * $techPay->price;
+
+            if ($techPay->discount_type === 'نسبة') {
+                $discount = $total * ($techPay->discount_value / 100);
+            } else {
+                $discount = $techPay->discount_value ?? 0;
+            }
+
+            $techPay->finalprice = $total - $discount;
         });
     }
+
 
 
     public function invoice()

@@ -20,18 +20,35 @@ class LogiPay extends Model
         'workshopname',
         'logistic_team_id',
         'invoice_id',
+        'discount_type',
+        'discount_value',
     ];
 
     protected static function boot()
     {
         parent::boot();
 
-        static::creating(function ($logicPay) {
-            $logicPay->finalprice = $logicPay->amount * $logicPay->price;
+        static::creating(function ($techPay) {
+            $total = $techPay->amount * $techPay->price;
+
+            if ($techPay->discount_type === 'نسبة') {
+                $discount = $total * ($techPay->discount_value / 100);
+            } else {
+                $discount = $techPay->discount_value ?? 0;
+            }
+            $techPay->finalprice = $total - $discount;
         });
 
-        static::updating(function ($logicPay) {
-            $logicPay->finalprice = $logicPay->amount * $logicPay->price;
+        static::updating(function ($techPay) {
+            $total = $techPay->amount * $techPay->price;
+
+            if ($techPay->discount_type === 'نسبة') {
+                $discount = $total * ($techPay->discount_value / 100);
+            } else {
+                $discount = $techPay->discount_value ?? 0;
+            }
+
+            $techPay->finalprice = $total - $discount;
         });
     }
 

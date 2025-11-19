@@ -28,6 +28,9 @@ class UpdateInvoiceItemRequest extends FormRequest
             'price' => 'sometimes|numeric|min:1',
             'payed' => 'sometimes|boolean',
             'invoice_id' => 'sometimes|exists:invoices,id',
+
+            'discount_value' => 'sometimes|numeric|min:0',
+            'discount_type' => 'sometimes|string|in:قيمة,نسبة',
         ];
     }
 }

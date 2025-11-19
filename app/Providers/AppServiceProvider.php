@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\InnerTransaction;
+use App\Models\Invoice;
 use App\Models\LogisticTeam;
 use App\Models\OuterTransaction;
 use App\Models\TechnicalTeam;
@@ -30,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Relation::morphMap([
             'employee' => Employee::class,
+            'invoice' => Invoice::class,
             'customer' => Customer::class,
             'admin' => Admin::class,
             'workshop' => Workshop::class,

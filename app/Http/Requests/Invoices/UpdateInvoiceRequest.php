@@ -27,7 +27,9 @@ class UpdateInvoiceRequest extends FormRequest
             'amount' => 'sometimes|required|numeric|min:1',
             'finance_item_id' => 'sometimes|required|exists:finance_items,id',
             'invoiceable_id' => 'sometimes|required|integer',
-            'invoiceable_type' => 'sometimes|required|string|in:App\Models\InnerTransaction,App\Models\OuterTransaction',
+            'invoiceable_type' => 'required|string|in:innerTransaction,outerTransaction',
+            'discount_value' => 'sometimes|numeric|min:0',
+            'discount_type'  => 'sometimes|string|in:قيمة,نسبة',
         ];
     }
 }

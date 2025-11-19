@@ -30,6 +30,10 @@ class CreateTeachPaysRequest extends FormRequest
             'workshopname' => 'required|string|max:255',
             'technical_team_id' => 'required|exists:technical_teams,id',
             'invoice_id' => 'required|exists:invoices,id',
+
+            'discount_value' => 'nullable|numeric|min:0',
+            'discount_type' => 'nullable|string|in:قيمة,نسبة',
+
         ];
     }
 }

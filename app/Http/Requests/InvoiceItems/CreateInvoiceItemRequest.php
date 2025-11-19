@@ -28,6 +28,9 @@ class CreateInvoiceItemRequest extends FormRequest
             'price' => 'required|numeric|min:1',
             'payed' => 'required|boolean',
             'invoice_id' => 'required|exists:invoices,id',
+
+            'discount_value' => 'nullable|numeric|min:0',
+            'discount_type' => 'nullable|string|in:قيمة,نسبة',
         ];
     }
 }

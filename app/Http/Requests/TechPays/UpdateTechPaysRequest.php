@@ -30,6 +30,8 @@ class UpdateTechPaysRequest extends FormRequest
             'workshopname' => 'sometimes|nullable|string|max:255',
             'technical_team_id' => 'sometimes|exists:technical_teams,id',
             'invoice_id' => 'sometimes|exists:invoices,id',
+            'discount_value' => 'sometimes|numeric|min:0',
+            'discount_type' => 'sometimes|string|in:قيمة,نسبة',
         ];
     }
 }

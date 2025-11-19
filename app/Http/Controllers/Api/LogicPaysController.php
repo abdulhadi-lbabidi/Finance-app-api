@@ -17,11 +17,16 @@ class LogicPaysController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();
 
-        $totalFinalPrice = $logicPays->sum('finalprice');
+        $beforeDiscount = $logicPays->sum(function ($item) {
+            return $item->amount * $item->price;
+        });
+        $afterDiscount = $logicPays->sum('finalprice');
 
         return response()->json([
             'logicPays' => $logicPays,
-            'totalFinalPrice' => $totalFinalPrice,
+            'before_discount' => $beforeDiscount,
+            'after_discount'  => $afterDiscount,
+
         ]);
     }
     public function store(CreateLogicPaysRequest $request)
