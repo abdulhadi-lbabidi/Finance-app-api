@@ -24,6 +24,10 @@ class AdminSeeder extends Seeder
             'name'=>'أساسي',
             'active'=>true,
         ]);
+        $tresurefund = $tresure->tresurefunds()->create([
+            'name'=>'أساسي',
+            'desc'=>fake()->text(),
+        ]);
         $user = $admin->user()->create([
             'email'=>'abdalrahman.nouh@nouhagency.com',
             'password'=>bcrypt('1234.4321A'),

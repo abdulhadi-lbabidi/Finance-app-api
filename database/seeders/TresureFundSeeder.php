@@ -13,6 +13,6 @@ class TresureFundSeeder extends Seeder
      */
     public function run(): void
     {
-        TresureFund::factory(10)->create();
+        // TresureFund::factory(10)->create();
     }
 }

@@ -19,9 +19,13 @@ class EmployeeSeeder extends Seeder
             'employee_type_id'=>1,
             'department_id'=>1
         ]);
-        $emp1->tresure()->create([
+        $tresure1 = $emp1->tresure()->create([
             'name'=>'أساسي',
             'active'=>true,
+        ]);
+        $tresure1->tresurefunds()->create([
+            'name'=>'أساسي',
+            'desc'=>fake()->text(),
         ]);
         $emp1->user()->create([
             'email'=>'hatem.alsaleh@nouhagency.com',
@@ -37,9 +41,13 @@ class EmployeeSeeder extends Seeder
             'employee_type_id'=>1,
             'department_id'=>3,
         ]);
-        $emp2->tresure()->create([
+        $tresure2 = $emp2->tresure()->create([
             'name'=>'أساسي',
             'active'=>true,
+        ]);
+        $tresure2->tresurefunds()->create([
+            'name'=>'أساسي',
+            'desc'=>fake()->text(),
         ]);
         $emp2->user()->create([
             'email'=>'abdalhadi.lbabidi@nouhagency.com',
@@ -55,9 +63,13 @@ class EmployeeSeeder extends Seeder
             'employee_type_id'=>3,
             'department_id'=>2
         ]);
-        $emp3->tresure()->create([
+        $tresure3=$emp3->tresure()->create([
             'name'=>'أساسي',
             'active'=>true,
+        ]);
+        $tresure3->tresurefunds()->create([
+            'name'=>'أساسي',
+            'desc'=>fake()->text(),
         ]);
         $emp3->user()->create([
             'email'=>'ahmad.shahrour@nouhagency.com',
@@ -73,9 +85,13 @@ class EmployeeSeeder extends Seeder
             'employee_type_id'=>3,
             'department_id'=>2
         ]);
-        $emp4->tresure()->create([
+        $tresure4 = $emp4->tresure()->create([
             'name'=>'أساسي',
             'active'=>true,
+        ]);
+        $tresure4->tresurefunds()->create([
+            'name'=>'أساسي',
+            'desc'=>fake()->text(),
         ]);
         $emp4->user()->create([
             'email'=>'rami.alaya@nouhagency.com',

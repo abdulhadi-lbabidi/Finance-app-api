@@ -19,13 +19,12 @@ class Customer extends Model
     {
         return $this->morphOne(User::class, 'userable');
     }
-
     public function workshops()
     {
         return $this->hasMany(Workshop::class);
     }
 
-        public function phones()
+    public function phones()
     {
         return $this->morphMany(Phone::class, 'phoneable');
     }
@@ -40,6 +39,10 @@ class Customer extends Model
         public function inventories()
     {
         return $this->morphMany(Inventory::class, 'invetorable');
+    }
+    public function tresures()
+    {
+        return $this->morphMany(Tresure::class, 'tresureable');
     }
 
 }

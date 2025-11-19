@@ -13,13 +13,20 @@ class WorkshopSeeder extends Seeder
      */
     public function run(): void
     {
-        Workshop::factory()->create([
+        $workshop = Workshop::factory()->create([
             'name'=>'W64',
             'location'=>fake()->address(),
             'customer_id'=>1,
-        ])->tresures()->create([
+        ]);
+        $tresure = $workshop->tresures()->create([
             'name'=>'أساسي',
             'active'=>true,
         ]);
+
+        $tresure->tresurefunds()->create([
+            'name'=>'أساسي',
+            'desc'=>fake()->text(),
+        ]);
+
     }
 }
