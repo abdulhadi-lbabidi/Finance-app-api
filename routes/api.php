@@ -72,11 +72,12 @@ Route::get('/data/logic-teams', [LogisticTeamController::class, 'index']);
 
 // Invoices
 Route::apiResource('/data/invoices', InvoiceController::class);
-Route::post('/data/invoices-image/{invoice}', [InvoiceController::class, 'invoiceImage']);
+
+Route::post('/data/invoices-image/{invoice}', [InvoiceController::class, 'storeInvoiceImage']);
 Route::get('/data/invoices-images/{type}', [InvoiceController::class, 'getAllInvoicesImages']);
 Route::delete('/data/invoices-image/{image}', [InvoiceController::class, 'deleteInvoiceImage']);
 Route::get('/data/invoices-image/{image}', [InvoiceController::class, 'showInvoiceImage']);
-Route::get('/data/invoices-images/download/{fileName}', [InvoiceController::class, 'downloadInvoicesImages']);
+Route::get('/data/invoices-images/download/{image}', [InvoiceController::class, 'downloadInvoiceImage']);
 // TechPays
 Route::apiResource('/data/tech-pays', TechPaysController::class);
 // LogicPays

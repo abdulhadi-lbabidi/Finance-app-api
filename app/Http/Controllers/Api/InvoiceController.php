@@ -56,7 +56,7 @@ class InvoiceController extends Controller
         return response()->json(['message' => 'Invoice deleted successfully']);
     }
 
-    public function invoiceImage(Request $request, Invoice $invoice)
+    public function storeInvoiceImage(Request $request, Invoice $invoice)
     {
         $request->validate([
             'image' => 'required|mimes:jpg,jpeg,png,webp,pdf',
@@ -97,12 +97,15 @@ class InvoiceController extends Controller
     }
 
 
-    public function downloadInvoicesImages($fileName)
+    public function downloadInvoiceImage(Image $image)
     {
-        $filePath = 'invoices/' . $fileName;
-        if (!Storage::disk('public')->exists($filePath)) {
+
+        $path = storage_path("app/public/" . $image->url);
+
+        if (!file_exists($path)) {
             return response()->json(['error' => 'File not found'], 404);
         }
-        return Storage::disk('public')->download($filePath);
+
+        return response()->download($path);
     }
 }
