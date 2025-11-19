@@ -15,11 +15,16 @@ class TechPaysController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();
 
-        $totalFinalPrice = $techPays->sum('finalprice');
+
+        $beforeDiscount = $techPays->sum(function ($item) {
+            return $item->amount * $item->price;
+        });
+        $afterDiscount = $techPays->sum('finalprice');
 
         return response()->json([
             'techPays' => $techPays,
-            'totalFinalPrice' => $totalFinalPrice,
+            'before_discount' => $beforeDiscount,
+            'after_discount'  => $afterDiscount,
         ]);
     }
 

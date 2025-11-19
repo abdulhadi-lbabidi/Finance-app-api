@@ -15,11 +15,15 @@ class InvoiceItemController extends Controller
         $invoiceItems = InvoiceItem::orderBy('updated_at', 'desc')
             ->get();
 
-        $totalFinalPrice = $invoiceItems->sum('finalprice');
+        $beforeDiscount = $invoiceItems->sum(function ($item) {
+            return $item->amount * $item->price;
+        });
+        $afterDiscount = $invoiceItems->sum('finalprice');
 
         return response()->json([
             'invoiceItems' => $invoiceItems,
-            'totalFinalPrice' => $totalFinalPrice,
+            'before_discount' => $beforeDiscount,
+            'after_discount'  => $afterDiscount,
         ]);
     }
 

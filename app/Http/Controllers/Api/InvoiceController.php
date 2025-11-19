@@ -15,15 +15,28 @@ class InvoiceController extends Controller
     public function index(Request $request)
     {
         $type = $request->query('type');
+
         $query = Invoice::with('financeitem:id,name')
             ->orderBy('updated_at', 'desc');
 
         if ($type) {
             $query->where('invoiceable_type', lcfirst($type));
         }
+
+        $beforeDiscount = (clone $query)->sum('amount');
+        $afterDiscount  = (clone $query)->sum('final_price');
+
         $invoices = $query->get();
-        return response()->json(['invoices' => $invoices]);
+
+        return response()->json([
+            'invoices' => $invoices,
+            'totals' => [
+                'before_discount' => $beforeDiscount,
+                'after_discount' => $afterDiscount,
+            ],
+        ]);
     }
+
 
 
     public function store(CreateInvoiceRequest $request)
