@@ -8,7 +8,6 @@ use App\Http\Requests\Invoices\UpdateInvoiceRequest;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
@@ -31,6 +30,18 @@ class InvoiceController extends Controller
     {
         $data = $request->validated();
 
+        $amount = $data['amount'];
+        $discountValue = $data['discount_value'] ?? 0;
+        $discountType = $data['discount_type'] ?? 'amount';
+
+        if ($discountType === 'نسبة') {
+            $discount = $amount * ($discountValue / 100);
+        } else {
+            $discount = $discountValue;
+        }
+
+        $data['final_price'] = $amount - $discount;
+
         $invoice = Invoice::create($data);
 
         return response()->json([
@@ -39,6 +50,7 @@ class InvoiceController extends Controller
         ], 201);
     }
 
+
     public function show(Invoice $invoice)
     {
         return response()->json(['invoice' => $invoice]);
@@ -46,8 +58,25 @@ class InvoiceController extends Controller
 
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
-        $invoice->update($request->validated());
-        return response()->json(['message' => 'Invoice updated successfully', 'invoice' => $invoice]);
+        $data = $request->validated();
+
+        $amount = $data['amount'] ?? $invoice->amount;
+        $discountValue = $data['discount_value'] ?? $invoice->discount_value;
+        $discountType = $data['discount_type'] ?? $invoice->discount_type;
+
+        if ($discountType === 'نسبة') {
+            $discount = $amount * ($discountValue / 100);
+        } else {
+            $discount = $discountValue;
+        }
+        $finalPrice = $amount - $discount;
+
+        $data['final_price'] = $finalPrice;
+        $invoice->update($data);
+        return response()->json([
+            'message' => 'Invoice updated successfully',
+            'invoice' => $invoice
+        ]);
     }
 
     public function destroy(Invoice $invoice)

@@ -30,6 +30,9 @@ class UpdateLogicPaysRequest extends FormRequest
             'workshopname' => 'sometimes|nullable|string|max:255',
             'logistic_team_id' => 'sometimes|exists:logistic_teams,id',
             'invoice_id' => 'sometimes|exists:invoices,id',
+
+            'discount_value' => 'sometimes|numeric|min:0',
+            'discount_type' => 'sometimes|string|in:قيمة,نسبة',
         ];
     }
 }

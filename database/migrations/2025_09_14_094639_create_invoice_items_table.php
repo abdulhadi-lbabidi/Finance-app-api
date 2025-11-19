@@ -17,9 +17,17 @@ return new class extends Migration
             $table->string('desc')->nullable();
             $table->integer('amount');
             $table->integer('price');
-            $table->integer('finalprice')->nullable();
             $table->boolean('payed');
-            $table->foreignId('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            $table->foreignId('invoice_id')
+                ->references('id')
+                ->on('invoices')
+                ->onDelete('cascade');
+
+            $table->decimal('discount_value', 10, 2)
+                ->default(0);
+            $table->enum('discount_type', ['قيمة', 'نسبة'])
+                ->default('قيمة');
+            $table->decimal('finalprice', 10, 2)->default(0);
             $table->timestamps();
         });
     }

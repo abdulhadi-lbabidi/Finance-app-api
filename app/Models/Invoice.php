@@ -17,6 +17,9 @@ class Invoice extends Model
         'finance_item_id',
         'invoiceable_id',
         'invoiceable_type',
+        'discount_value',
+        'discount_type',
+        'final_price'
     ];
 
 
