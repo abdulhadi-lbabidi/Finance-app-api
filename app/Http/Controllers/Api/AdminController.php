@@ -42,7 +42,7 @@ class AdminController extends Controller
             'email' =>$data['email'],
             'password' => bcrypt($data['password'])
         ]);
-        $tresure = $admin->tresure()->create([
+        $tresure = $admin->tresures()->create([
             'name' => 'أساسي',
             'active' => true,
         ]);
