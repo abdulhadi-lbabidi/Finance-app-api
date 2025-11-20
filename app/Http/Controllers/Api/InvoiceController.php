@@ -66,7 +66,7 @@ class InvoiceController extends Controller
 
     public function show(Invoice $invoice)
     {
-        return response()->json(['invoice' => $invoice]);
+        return response()->json(['invoice' => $invoice->load('financeitem:id,name')]);
     }
 
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
