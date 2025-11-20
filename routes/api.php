@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\SocialmediaTypeController;
 use App\Http\Controllers\Api\TechnicalTeamController;
 use App\Http\Controllers\Api\TechPaysController;
 use App\Http\Controllers\Api\TresureController;
+use App\Http\Controllers\Api\TresureFundController;
 use App\Http\Controllers\Api\WorkshopController;
 use App\Http\Controllers\Api\WorkshopEmployeeController;
 use App\Http\Controllers\Api\WorkshopLogisticController;
@@ -71,6 +72,11 @@ Route::get('/data/tresurefund/{id}', [TresureController::class, 'getTresureFunds
 Route::get('/data/technical-teams', [TechnicalTeamController::class, 'index']);
 // LogisticTeam
 Route::get('/data/logic-teams', [LogisticTeamController::class, 'index']);
+// tresureFunds
+Route::get('/data/tresure_funds', [TresureFundController::class, 'index']);
+
+// tresures
+Route::get('/data/get-tresures', [TresureController::class, 'getTresures']);
 
 // Invoices
 Route::apiResource('/data/invoices', InvoiceController::class);

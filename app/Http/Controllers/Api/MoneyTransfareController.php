@@ -27,8 +27,9 @@ class MoneyTransfareController extends Controller
       '=',
       $data['tresurefund_id']
     )
-      ->get()
-      ->load('totresurefund', 'fromtresurefund');
+      ->orderBy('updated_at', 'desc')
+      ->with(['totresurefund', 'fromtresurefund'])
+      ->get();
     return response()->json(['moneytrans' => $MoneyTranfare]);
   }
 

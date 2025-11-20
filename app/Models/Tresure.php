@@ -13,6 +13,10 @@ class Tresure extends Model
 
   protected $fillable = [
     'name',
+    "desc",
+    "amount",
+    "from_tresure_fund_id",
+    "to_tresure_fund_id",
     'active',
   ];
 
