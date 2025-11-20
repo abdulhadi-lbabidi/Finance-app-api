@@ -7,26 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tresure extends Model
 {
-    /** @use HasFactory<\Database\Factories\TresureFactory> */
-    use HasFactory;
+  /** @use HasFactory<\Database\Factories\TresureFactory> */
+  use HasFactory;
+  protected $table = 'tresures';
 
-    protected $fillable = [
-        'name',
-        'active',
-    ];
-
-
-    public function tresureable()
-    {
-        return $this->morphTo();
-    }
-
-    public function tresurefunds()
-    {
-        return $this->hasMany(TresureFund::class);
-    }
+  protected $fillable = [
+    'name',
+    'active',
+  ];
 
 
+  public function tresureable()
+  {
+    return $this->morphTo();
+  }
 
-
+  public function tresurefunds()
+  {
+    return $this->hasMany(TresureFund::class);
+  }
 }

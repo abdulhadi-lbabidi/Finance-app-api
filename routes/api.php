@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 Route::get('/user', function (Request $request) {
-    return $request->user();
+  return $request->user();
 })->middleware('auth:sanctum');
 
 Route::apiResource('/data/admin', AdminController::class);
@@ -51,6 +51,8 @@ Route::apiResource('/data/inventory', InventoryController::class);
 Route::get('/data/tresure', [DataController::class, 'gettresureselector']);
 Route::apiResource('/data/workshop', WorkshopController::class);
 Route::apiResource('/data/moneytransfare', MoneyTransfareController::class);
+
+
 Route::apiResource('/data/innertrans', InnerTransactionController::class);
 Route::apiResource('/data/outertrans', OuterTransactionController::class);
 Route::apiResource('/data/workshopre/employee', WorkshopEmployeeController::class);

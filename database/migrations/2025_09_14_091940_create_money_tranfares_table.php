@@ -16,8 +16,14 @@ return new class extends Migration
             $table->string('name');
             $table->text('desc')->nullable();
             $table->integer('amount');
-            $table->foreignId('from_tresure_fund_id')->references('id')->on('tresure_funds')->onDelete('cascade');
-            $table->foreignId('to_tresure_fund_id')->references('id')->on('tresure_funds')->onDelete('cascade');
+            $table->foreignId('from_tresure_fund_id')
+                ->references('id')
+                ->on('tresure_funds')
+                ->onDelete('cascade');
+            $table->foreignId('to_tresure_fund_id')
+                ->references('id')
+                ->on('tresure_funds')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

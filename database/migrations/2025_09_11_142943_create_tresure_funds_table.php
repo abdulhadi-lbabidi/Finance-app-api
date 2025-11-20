@@ -6,25 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('tresure_funds', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('desc')->nullable();
-            $table->foreignId('tresure_id')->references('id')->on('tresures')->onDelete('cascade');
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   */
+  public function up(): void
+  {
+    Schema::create('tresure_funds', function (Blueprint $table) {
+      $table->id();
+      $table->string('name');
+      $table->text('desc')->nullable();
+      $table->foreignId('tresure_id')
+        ->references('id')
+        ->on('tresures')
+        ->onDelete('cascade');
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('tresure_funds');
-    }
+  /**
+   * Reverse the migrations.
+   */
+  public function down(): void
+  {
+    Schema::dropIfExists('tresure_funds');
+  }
 };
