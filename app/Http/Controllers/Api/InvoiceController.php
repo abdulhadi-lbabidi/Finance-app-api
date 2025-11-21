@@ -8,6 +8,7 @@ use App\Http\Requests\Invoices\UpdateInvoiceRequest;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
@@ -17,7 +18,48 @@ class InvoiceController extends Controller
     $type = $request->query('type');
 
     $query = Invoice::with('financeitem:id,name')
+
+      ->withSum(
+        ['invoiceitem as items_total_before_discount' => function ($q) {
+          $q->select(DB::raw('COALESCE(SUM(price * amount), 0)'));
+        }],
+        DB::raw('0')
+      )
+      ->withSum(
+        ['invoiceitem as items_total_after_discount' => function ($q) {
+          $q->select(DB::raw('COALESCE(SUM(finalprice), 0)'));
+        }],
+        DB::raw('0')
+      )
+
+      ->withSum(
+        ['logipays as logi_total_before_discount' => function ($q) {
+          $q->select(DB::raw('COALESCE(SUM(price * amount), 0)'));
+        }],
+        DB::raw('0')
+      )
+      ->withSum(
+        ['logipays as logi_total_after_discount' => function ($q) {
+          $q->select(DB::raw('COALESCE(SUM(finalprice), 0)'));
+        }],
+        DB::raw('0')
+      )
+
+      ->withSum(
+        ['techpays as tech_total_before_discount' => function ($q) {
+          $q->select(DB::raw('COALESCE(SUM(price * amount), 0)'));
+        }],
+        DB::raw('0')
+      )
+      ->withSum(
+        ['techpays as tech_total_after_discount' => function ($q) {
+          $q->select(DB::raw('COALESCE(SUM(finalprice), 0)'));
+        }],
+        DB::raw('0')
+      )
       ->orderBy('updated_at', 'desc');
+
+
 
     if ($type) {
       $query->where('invoiceable_type', lcfirst($type));
@@ -28,6 +70,20 @@ class InvoiceController extends Controller
 
     $invoices = $query->get();
 
+    $invoices->transform(function ($invoice) {
+      $invoice->total_before_discount =
+        ($invoice->items_total_before_discount ?? 0)
+        + ($invoice->logi_total_before_discount ?? 0)
+        + ($invoice->tech_total_before_discount ?? 0);
+
+      $invoice->total_after_discount =
+        ($invoice->items_total_after_discount ?? 0)
+        + ($invoice->logi_total_after_discount ?? 0)
+        + ($invoice->tech_total_after_discount ?? 0);
+
+      return $invoice;
+    });
+
     return response()->json([
       'invoices' => $invoices,
       'totals' => [
@@ -36,6 +92,7 @@ class InvoiceController extends Controller
       ],
     ]);
   }
+
 
 
 
