@@ -6,25 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('tresures', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->boolean('active');
-            $table->morphs('tresureable');
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   */
+  public function up(): void
+  {
+    Schema::create('tresures', function (Blueprint $table) {
+      $table->id();
+      $table->string('name');
+      $table->boolean('active')->default(true);
+      $table->morphs('tresureable');
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('tresures');
-    }
+  /**
+   * Reverse the migrations.
+   */
+  public function down(): void
+  {
+    Schema::dropIfExists('tresures');
+  }
 };

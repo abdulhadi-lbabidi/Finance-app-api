@@ -13,10 +13,8 @@ class Tresure extends Model
 
   protected $fillable = [
     'name',
-    "desc",
-    "amount",
-    "from_tresure_fund_id",
-    "to_tresure_fund_id",
+    "tresureable_type",
+    "tresureable_id",
     'active',
   ];
 
@@ -28,6 +26,9 @@ class Tresure extends Model
 
   public function tresurefunds()
   {
-    return $this->hasMany(TresureFund::class);
+    return $this->hasMany(
+      TresureFund::class,
+      'tresure_id'
+    );
   }
 }

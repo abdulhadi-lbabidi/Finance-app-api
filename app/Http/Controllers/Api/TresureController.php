@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tresure\CreateTresureRequest;
+use App\Http\Requests\Tresure\UpdateTresureRequest;
 use App\Models\Admin;
 use App\Models\Customer;
 use App\Models\Employee;
@@ -12,6 +14,39 @@ use App\Models\Workshop;
 
 class TresureController extends Controller
 {
+
+  public function store(CreateTresureRequest $request)
+  {
+    $tresure = Tresure::create($request->validated());
+
+    return response()->json([
+      'message' => 'Invoice created successfully',
+      'tresure' => $tresure
+    ], 201);
+  }
+
+
+  public function update(UpdateTresureRequest $request, Tresure $tresure)
+  {
+    $tresure->update($request->validated());
+
+    return response()->json([
+      'message' => 'تم تحديث الخزنة بنجاح',
+      'tresure' => $tresure,
+    ], 200);
+  }
+
+  public function destroy(Tresure $tresure)
+  {
+    $tresure->delete();
+
+    return response()->json(['message' => 'Invoice deleted successfully']);
+  }
+  public function show(Tresure $tresure)
+  {
+    return response()->json(['tresure' => $tresure->load('tresurefunds:id,name')]);
+  }
+
 
   public function getTresureByType()
   {

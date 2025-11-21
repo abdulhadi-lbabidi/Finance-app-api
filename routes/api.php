@@ -27,10 +27,8 @@ use App\Http\Controllers\Api\TresureFundController;
 use App\Http\Controllers\Api\WorkshopController;
 use App\Http\Controllers\Api\WorkshopEmployeeController;
 use App\Http\Controllers\Api\WorkshopLogisticController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 Route::get('/user', function (Request $request) {
   return $request->user();
@@ -68,14 +66,6 @@ Route::get('/data/customer/tresure/{id}', [TresureController::class, 'getcustome
 Route::get('/data/employee/tresure/{id}', [TresureController::class, 'getemployeetresure']);
 Route::get('/data/tresurefund/{id}', [TresureController::class, 'getTresureFunds']);
 
-// TechnicalTeam
-Route::get('/data/technical-teams', [TechnicalTeamController::class, 'index']);
-// LogisticTeam
-Route::get('/data/logic-teams', [LogisticTeamController::class, 'index']);
-// tresureFunds
-Route::get('/data/tresure_funds', [TresureFundController::class, 'index']);
-
-// tresures
 Route::get('/data/tresures-type', [TresureController::class, 'getTresureByType']);
 // get users by type
 Route::get('/data/users/by-type/{type}', [TresureController::class, 'getUsersByType']);
@@ -83,6 +73,20 @@ Route::get('/data/users/by-type/{type}', [TresureController::class, 'getUsersByT
 Route::get('/data/tresures/by-user/{user_id}/{type}', [TresureController::class, 'getTresuresByUser']);
 //get tresures funds by tresure
 Route::get('/data/tresure-funds/{tresure_id}', [TresureFundController::class, 'getTresureFundsByTresureId']);
+
+Route::post('/data/tresure', [TresureController::class, 'store']);
+Route::get('/data/tresure/{tresure}', [TresureController::class, 'show']);
+Route::put('/data/tresure/{tresure}', [TresureController::class, 'update']);
+Route::delete('/data/tresure/{tresure}', [TresureController::class, 'destroy']);
+
+// TechnicalTeam
+Route::get('/data/technical-teams', [TechnicalTeamController::class, 'index']);
+// LogisticTeam
+Route::get('/data/logic-teams', [LogisticTeamController::class, 'index']);
+// tresureFunds
+Route::get('/data/tresure_funds', [TresureFundController::class, 'index']);
+
+
 
 
 // Invoices
