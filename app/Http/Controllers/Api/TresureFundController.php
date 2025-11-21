@@ -14,4 +14,16 @@ class TresureFundController extends Controller
       "tresure_funds" => TresureFund::all()
     ], 200);
   }
+
+  public function getTresureFundsByTresureId(string $tresure_id)
+  {
+
+    $funds = TresureFund::where('tresure_id', $tresure_id)
+      ->select('id', 'name')
+      ->get();
+
+    return response()->json([
+      'funds' => $funds
+    ]);
+  }
 }

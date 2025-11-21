@@ -76,7 +76,14 @@ Route::get('/data/logic-teams', [LogisticTeamController::class, 'index']);
 Route::get('/data/tresure_funds', [TresureFundController::class, 'index']);
 
 // tresures
-Route::get('/data/get-tresures', [TresureController::class, 'getTresures']);
+Route::get('/data/tresures-type', [TresureController::class, 'getTresureByType']);
+// get users by type
+Route::get('/data/users/by-type/{type}', [TresureController::class, 'getUsersByType']);
+//get tresures by user
+Route::get('/data/tresures/by-user/{user_id}/{type}', [TresureController::class, 'getTresuresByUser']);
+//get tresures funds by tresure
+Route::get('/data/tresure-funds/{tresure_id}', [TresureFundController::class, 'getTresureFundsByTresureId']);
+
 
 // Invoices
 Route::apiResource('/data/invoices', InvoiceController::class);

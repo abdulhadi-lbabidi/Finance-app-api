@@ -69,9 +69,9 @@ class MoneyTransfareController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(MoneyTranfare $moneyTranfare)
+  public function destroy(MoneyTranfare $moneytransfare)
   {
-    $moneyTranfare->delete();
+    $moneytransfare->delete();
     return response()->json(['message' => 'Money transfer deleted']);
   }
 }

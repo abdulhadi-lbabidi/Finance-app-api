@@ -8,17 +8,18 @@ use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\Tresure;
 use App\Models\Workshop;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 
 class TresureController extends Controller
 {
 
   public function getTresureByType()
   {
-    $tresures = Tresure::all();
-    return response()->json(['tresures' => $tresures]);
+    $types = Tresure::pluck('tresureable_type')->unique()->values();
+
+    return response()->json(['truserTtype' => $types]);
   }
+
   public function getadmintresure(string $id)
   {
     // $workshops = Workshop::with('tresures.tresurefunds.moneyGets')->get();
@@ -38,7 +39,7 @@ class TresureController extends Controller
   public function getworkshoptresure(string $id)
   {
     $workshop = Workshop::findOrFail($id);
-    return response()->json(['tresures' => $workshop->tresures]);
+    return response()->json(['tresures' => $workshop->tresures, 'workshop' => $workshop]);
   }
   public function getcustomertresure(string $id)
   {
@@ -54,5 +55,45 @@ class TresureController extends Controller
   {
     $tresure = Tresure::findOrFail($id);
     return response()->json(['funds' => $tresure->tresurefunds]);
+  }
+
+  public function getUsersByType(string $type)
+  {
+    switch ($type) {
+      case 'admin':
+        $data = Admin::select('id', 'name')->get();
+        break;
+
+      case 'employee':
+        $data = Employee::select('id', 'name')->get();
+        break;
+
+      case 'workshop':
+        $data = Workshop::select('id', 'name')->get();
+        break;
+
+      case 'customer':
+        $data = Customer::select('id', 'name')->get();
+        break;
+
+      default:
+        return response()->json(['error' => 'invalid type'], 400);
+    }
+
+    return response()->json([
+      'users' => $data
+    ]);
+  }
+
+  public function getTresuresByUser(string $user_id, string $type)
+  {
+    $tresures = Tresure::where('tresureable_id', $user_id)
+      ->where('tresureable_type', $type)
+      ->select('id', 'name')
+      ->get();
+
+    return response()->json([
+      'tresures' => $tresures
+    ]);
   }
 }
