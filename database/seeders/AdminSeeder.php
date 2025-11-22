@@ -20,14 +20,14 @@ class AdminSeeder extends Seeder
             'department'=>'هندسة معمارية',
             'admintype_id'=>1
         ]);
-        $tresure = $admin->tresures()->create([
-            'name'=>'أساسي',
-            'active'=>true,
-        ]);
-        $tresurefund = $tresure->tresurefunds()->create([
-            'name'=>'أساسي',
-            'desc'=>fake()->text(),
-        ]);
+        // $tresure = $admin->tresures()->create([
+        //     'name'=>'أساسي',
+        //     'active'=>true,
+        // ]);
+        // $tresurefund = $tresure->tresurefunds()->create([
+        //     'name'=>'أساسي',
+        //     'desc'=>fake()->text(),
+        // ]);
         $user = $admin->user()->create([
             'email'=>'abdalrahman.nouh@nouhagency.com',
             'password'=>bcrypt('1234.4321A'),

@@ -19,7 +19,7 @@ class EmployeeSeeder extends Seeder
             'employee_type_id'=>1,
             'department_id'=>1
         ]);
-        $tresure1 = $emp1->tresure()->create([
+        $tresure1 = $emp1->tresures()->create([
             'name'=>'أساسي',
             'active'=>true,
         ]);
@@ -41,7 +41,7 @@ class EmployeeSeeder extends Seeder
             'employee_type_id'=>1,
             'department_id'=>3,
         ]);
-        $tresure2 = $emp2->tresure()->create([
+        $tresure2 = $emp2->tresures()->create([
             'name'=>'أساسي',
             'active'=>true,
         ]);
@@ -63,7 +63,7 @@ class EmployeeSeeder extends Seeder
             'employee_type_id'=>3,
             'department_id'=>2
         ]);
-        $tresure3=$emp3->tresure()->create([
+        $tresure3=$emp3->tresures()->create([
             'name'=>'أساسي',
             'active'=>true,
         ]);
@@ -85,7 +85,7 @@ class EmployeeSeeder extends Seeder
             'employee_type_id'=>3,
             'department_id'=>2
         ]);
-        $tresure4 = $emp4->tresure()->create([
+        $tresure4 = $emp4->tresures()->create([
             'name'=>'أساسي',
             'active'=>true,
         ]);

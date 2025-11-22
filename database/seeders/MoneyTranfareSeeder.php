@@ -13,6 +13,6 @@ class MoneyTranfareSeeder extends Seeder
      */
     public function run(): void
     {
-        MoneyTranfare::factory()->count(100)->create();
+        // MoneyTranfare::factory()->count(100)->create();
     }
 }
