@@ -79,14 +79,13 @@ Route::get('/data/tresure/{tresure}', [TresureController::class, 'show']);
 Route::put('/data/tresure/{tresure}', [TresureController::class, 'update']);
 Route::delete('/data/tresure/{tresure}', [TresureController::class, 'destroy']);
 
-// TechnicalTeam
-Route::get('/data/technical-teams', [TechnicalTeamController::class, 'index']);
-// LogisticTeam
-Route::get('/data/logic-teams', [LogisticTeamController::class, 'index']);
+
 // tresureFunds
 Route::get('/data/tresure_funds', [TresureFundController::class, 'index']);
-
-
+Route::post('/data/tresure_funds', [TresureFundController::class, 'store']);
+Route::get('/data/tresure_funds/{tresureFund}', [TresureFundController::class, 'show']);
+Route::put('/data/tresure_funds/{tresureFund}', [TresureFundController::class, 'update']);
+Route::delete('/data/tresure_funds/{tresureFund}', [TresureFundController::class, 'delete']);
 
 
 // Invoices
@@ -109,6 +108,10 @@ Route::apiResource('/data/invoice-items', InvoiceItemController::class);
 Route::get('/data/report/workshop/itemreport', [ReportsController::class, 'getItemsReport']);
 
 
+// TechnicalTeam
+Route::get('/data/technical-teams', [TechnicalTeamController::class, 'index']);
+// LogisticTeam
+Route::get('/data/logic-teams', [LogisticTeamController::class, 'index']);
 
 
 

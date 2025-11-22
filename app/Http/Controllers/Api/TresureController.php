@@ -20,7 +20,7 @@ class TresureController extends Controller
     $tresure = Tresure::create($request->validated());
 
     return response()->json([
-      'message' => 'Invoice created successfully',
+      'message' => 'tresure created successfully',
       'tresure' => $tresure
     ], 201);
   }
@@ -31,7 +31,7 @@ class TresureController extends Controller
     $tresure->update($request->validated());
 
     return response()->json([
-      'message' => 'تم تحديث الخزنة بنجاح',
+      'message' => 'tresure updated successfully',
       'tresure' => $tresure,
     ], 200);
   }
@@ -40,7 +40,7 @@ class TresureController extends Controller
   {
     $tresure->delete();
 
-    return response()->json(['message' => 'Invoice deleted successfully']);
+    return response()->json(['message' => 'tresure deleted successfully']);
   }
   public function show(Tresure $tresure)
   {
@@ -88,7 +88,7 @@ class TresureController extends Controller
   }
   public function getTresureFunds(string $id)
   {
-    $tresure = Tresure::findOrFail($id);
+    $tresure = Tresure::with('tresurefunds.tresure')->findOrFail($id);
     return response()->json(['funds' => $tresure->tresurefunds]);
   }
 
