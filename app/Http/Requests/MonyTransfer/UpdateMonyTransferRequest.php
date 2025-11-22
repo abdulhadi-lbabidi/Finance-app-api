@@ -24,7 +24,7 @@ class UpdateMonyTransferRequest extends FormRequest
     return [
       'name' => 'sometimes|string|max:255',
       'desc' => 'nullable|string',
-      'amount' => 'sometimes|integer|min:1',
+      'amount' => 'sometimes|numeric|min:1',
       'from_tresure_fund_id' => 'sometimes|exists:tresure_funds,id',
       'to_tresure_fund_id' => 'sometimes|exists:tresure_funds,id|different:from_treasure_fund_id',
     ];

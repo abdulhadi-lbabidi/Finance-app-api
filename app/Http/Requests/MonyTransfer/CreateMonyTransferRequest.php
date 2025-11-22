@@ -24,7 +24,7 @@ class CreateMonyTransferRequest extends FormRequest
     return [
       'name' => 'required|string|max:255',
       'desc' => 'nullable|string',
-      'amount' => 'required|integer|min:1',
+      'amount' => 'required|numeric|min:1',
       'from_tresure_fund_id' => 'required|exists:tresure_funds,id',
       'to_tresure_fund_id' => 'required|exists:tresure_funds,id|different:from_treasure_fund_id',
     ];
