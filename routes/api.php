@@ -124,6 +124,10 @@ Route::get('/data/inntrans', [DataController::class, 'getinntrans']);
 Route::get('/data/outtrans', [DataController::class, 'getouttrans']);
 Route::get('/data/home', [DataController::class, 'home']);
 
+Route::get('/migrate-and-seed', function () {
+    Artisan::call('migrate:fresh --seed');
+    return response()->json(['message' => 'Database migrated and seeded successfully!']);
+});
 
 // Route::get('/data/workshop',[DataController::class,'getworkshop']);
 // Route::get('/data/tresure',[DataController::class,'gettresure']);
