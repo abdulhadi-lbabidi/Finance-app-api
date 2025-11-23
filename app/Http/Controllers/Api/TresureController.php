@@ -8,6 +8,9 @@ use App\Http\Requests\Tresure\UpdateTresureRequest;
 use App\Models\Admin;
 use App\Models\Customer;
 use App\Models\Employee;
+use App\Models\InnerTransaction;
+use App\Models\MoneyTranfare;
+use App\Models\OuterTransaction;
 use App\Models\Tresure;
 use App\Models\Workshop;
 
@@ -44,8 +47,43 @@ class TresureController extends Controller
   }
   public function show(Tresure $tresure)
   {
-    return response()->json(['tresure' => $tresure->load('tresurefunds:id,name')]);
+    $funds = $tresure->tresurefunds()->pluck('id'); // IDs كل الملحقات
+
+    // التحويلات الصادرة
+    $totalOutgoingTransfers = MoneyTranfare::whereIn('from_tresure_fund_id', $funds)
+      ->sum('amount');
+
+    // التحويلات الواردة
+    $totalIncomingTransfers = MoneyTranfare::whereIn('to_tresure_fund_id', $funds)
+      ->sum('amount');
+
+    // مجموع كل مبالغ التحويلات (incoming + outgoing)
+    $totalTransfersSum = $totalIncomingTransfers + $totalOutgoingTransfers;
+
+    // المعاملات الداخلية
+    $totalInners = InnerTransaction::whereIn('tresure_fund_id', $funds)
+      ->sum('amount');
+
+    // المعاملات الخارجية
+    $totalOuters = OuterTransaction::whereIn('tresure_fund_id', $funds)
+      ->sum('amount');
+
+    // عدد الملحقات
+    $fundCount = $tresure->tresurefunds()->count();
+
+    return response()->json([
+      'tresure' => $tresure->load('tresurefunds'),
+      'stats' => [
+        'fund_count'        => $fundCount,
+        'total_outgoing'    => $totalOutgoingTransfers,
+        'total_incoming'    => $totalIncomingTransfers,
+        'total_transfers_sum'  => $totalTransfersSum,
+        'total_inners'      => $totalInners,
+        'total_outers'      => $totalOuters,
+      ]
+    ]);
   }
+
 
 
   public function getTresureByType()

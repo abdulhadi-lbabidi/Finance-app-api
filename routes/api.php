@@ -29,6 +29,7 @@ use App\Http\Controllers\Api\WorkshopEmployeeController;
 use App\Http\Controllers\Api\WorkshopLogisticController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/user', function (Request $request) {
   return $request->user();
@@ -128,8 +129,8 @@ Route::get('/data/outtrans', [DataController::class, 'getouttrans']);
 Route::get('/data/home', [DataController::class, 'home']);
 
 Route::get('/migrate-and-seed', function () {
-    Artisan::call('migrate:fresh --seed');
-    return response()->json(['message' => 'Database migrated and seeded successfully!']);
+  Artisan::call('migrate:fresh --seed');
+  return response()->json(['message' => 'Database migrated and seeded successfully!']);
 });
 
 // Route::get('/data/workshop',[DataController::class,'getworkshop']);

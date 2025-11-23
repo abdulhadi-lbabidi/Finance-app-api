@@ -16,29 +16,29 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
+  /**
+   * Register any application services.
+   */
+  public function register(): void
+  {
+    //
+  }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        Relation::morphMap([
-            'employee' => Employee::class,
-            'invoice' => Invoice::class,
-            'customer' => Customer::class,
-            'admin' => Admin::class,
-            'workshop' => Workshop::class,
-            'innerTransaction' => InnerTransaction::class,
-            'outerTransaction' => OuterTransaction::class,
-            'LogisticTeam' => LogisticTeam::class,
-            'TechnicalTeam' => TechnicalTeam::class,
-        ]);
-    }
+  /**
+   * Bootstrap any application services.
+   */
+  public function boot(): void
+  {
+    Relation::morphMap([
+      'employee' => Employee::class,
+      'invoice' => Invoice::class,
+      'customer' => Customer::class,
+      'admin' => Admin::class,
+      'workshop' => Workshop::class,
+      'innerTransaction' => InnerTransaction::class,
+      'outerTransaction' => OuterTransaction::class,
+      'LogisticTeam' => LogisticTeam::class,
+      'TechnicalTeam' => TechnicalTeam::class,
+    ]);
+  }
 }
