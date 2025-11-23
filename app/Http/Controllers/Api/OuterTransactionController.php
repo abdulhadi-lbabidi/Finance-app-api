@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\OuterTransaction;
+use App\Models\TresureFund;
 use Illuminate\Http\Request;
 
 class OuterTransactionController extends Controller
@@ -33,10 +34,17 @@ class OuterTransactionController extends Controller
       'name' => ['string', 'required'],
       'desc' => ['string', 'nullable'],
       'payed' => ['boolean', 'required'],
-      'amount' => ['integer', 'required'],
+      'amount' => ['numeric', 'required'],
       'indate' => ['date', 'required'],
     ]);
-    OuterTransaction::create($data);
+
+    $outer = OuterTransaction::create($data);
+
+    $tresureFund = TresureFund::find($data['tresure_fund_id']);
+
+    if ($tresureFund) {
+      $tresureFund->decrement('amount', $outer->amount);
+    }
     return response()->json(['message' => 'success']);
   }
 
@@ -57,14 +65,27 @@ class OuterTransactionController extends Controller
       'name' => ['string', 'required'],
       'desc' => ['string', 'nullable'],
       'payed' => ['boolean', 'required'],
-      'amount' => ['integer', 'required'],
+      'amount' => ['numeric', 'required'],
       'indate' => ['date', 'required'],
     ]);
+
     $outertrans = OuterTransaction::findOrFail($id);
+
+    $oldAmount = $outertrans->amount;
+
     $outertrans->update($data);
+
+    $difference = $outertrans->amount - $oldAmount;
+
+    $tresureFund = TresureFund::find($outertrans->tresure_fund_id);
+
+    if ($tresureFund) {
+      $tresureFund->decrement('amount', $difference);
+    }
 
     return response()->json(['outertrans' => $outertrans]);
   }
+
 
   /**
    * Remove the specified resource from storage.

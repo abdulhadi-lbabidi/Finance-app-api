@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\InnerTransaction;
+use App\Models\TresureFund;
 use Illuminate\Http\Request;
 
 class InnerTransactionController extends Controller
@@ -33,10 +34,12 @@ class InnerTransactionController extends Controller
       'name' => ['string', 'required'],
       'desc' => ['string', 'nullable'],
       'payed' => ['boolean', 'required'],
-      'amount' => ['integer', 'required'],
+      'amount' => ['numeric', 'required'],
       'indate' => ['date', 'required'],
     ]);
-    InnerTransaction::create($data);
+    $newInner =  InnerTransaction::create($data);
+    TresureFund::where('id', $newInner->tresure_fund_id)
+      ->increment('amount', $newInner->amount);
     return response()->json(['message' => 'success']);
   }
 
@@ -57,14 +60,27 @@ class InnerTransactionController extends Controller
       'name' => ['string', 'required'],
       'desc' => ['string', 'nullable'],
       'payed' => ['boolean', 'required'],
-      'amount' => ['integer', 'required'],
+      'amount' => ['numeric', 'required'],
       'indate' => ['date', 'required'],
     ]);
+
     $innertrans = InnerTransaction::findOrFail($id);
+
+    $oldAmount = $innertrans->amount;
+
     $innertrans->update($data);
 
+    $difference = $innertrans->amount - $oldAmount;
+
+    $tresureFund = TresureFund::find($innertrans->tresure_fund_id);
+
+    if ($tresureFund) {
+      $tresureFund->increment('amount', $difference);
+    }
     return response()->json(['innertrans' => $innertrans]);
   }
+
+
 
   /**
    * Remove the specified resource from storage.
