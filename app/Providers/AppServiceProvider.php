@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\InnerTransaction;
 use App\Models\Invoice;
 use App\Models\LogisticTeam;
+use App\Models\Office;
 use App\Models\OuterTransaction;
 use App\Models\TechnicalTeam;
 use App\Models\Workshop;
@@ -35,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
       'customer' => Customer::class,
       'admin' => Admin::class,
       'workshop' => Workshop::class,
+      'office' => Office::class,
       'innerTransaction' => InnerTransaction::class,
       'outerTransaction' => OuterTransaction::class,
       'LogisticTeam' => LogisticTeam::class,
