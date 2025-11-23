@@ -93,22 +93,81 @@ class TresureController extends Controller
     return response()->json(['truserTtype' => $types]);
   }
 
-  public function getadmintresure(string $id)
-  {
-    // $workshops = Workshop::with('tresures.tresurefunds.moneyGets')->get();
-    // foreach ($workshops as $workshop) {
-    //     $sum = 0;
-    //     foreach ($workshop->tresures as $tresures) {
-    //         foreach ($tresures->tresurefunds as $tresurefunds) {
-    //             $sum += $tresurefunds->moneyTransfares->sum('amount');
-    //         }
-    //     }
-    //     $test=$sum;
-    // }
+  // public function getadmintresure(string $id)
+  // {
+  //   // $workshops = Workshop::with('tresures.tresurefunds.moneyGets')->get();
+  //   // foreach ($workshops as $workshop) {
+  //   //     $sum = 0;
+  //   //     foreach ($workshop->tresures as $tresures) {
+  //   //         foreach ($tresures->tresurefunds as $tresurefunds) {
+  //   //             $sum += $tresurefunds->moneyTransfares->sum('amount');
+  //   //         }
+  //   //     }
+  //   //     $test=$sum;
+  //   // }
 
+  //   $admin = Admin::findOrFail($id);
+  //   return response()->json(['tresures' => $admin->tresures, 'admin' => $admin]);
+  // }
+
+  public function getAdminTresure(string $id)
+  {
     $admin = Admin::findOrFail($id);
-    return response()->json(['tresures' => $admin->tresures, 'admin' => $admin]);
+
+    $totalTresureCount = $admin->tresures()->count();
+    $tresures = $admin->tresures()
+      ->with('tresurefunds')
+      ->get()
+      ->map(function ($tresure) {
+        $funds = $tresure->tresurefunds()->pluck('id');
+
+        $totalOutgoingTransfers = MoneyTranfare::whereIn('from_tresure_fund_id', $funds)
+          ->sum('amount');
+
+        $totalIncomingTransfers = MoneyTranfare::whereIn('to_tresure_fund_id', $funds)
+          ->sum('amount');
+
+        $totalInners = InnerTransaction::whereIn('tresure_fund_id', $funds)
+          ->sum('amount');
+
+        $totalOuters = OuterTransaction::whereIn('tresure_fund_id', $funds)
+          ->sum('amount');
+
+        $fundCount = $tresure->tresurefunds()->count();
+
+        $totalTransfersSum = $totalOutgoingTransfers + $totalIncomingTransfers;
+
+        return [
+          'tresure' => $tresure,
+          'stats' => [
+            'fund_count' => $fundCount,
+            'total_outgoing' => $totalOutgoingTransfers,
+            'total_incoming' => $totalIncomingTransfers,
+            'total_inners' => $totalInners,
+            'total_outers' => $totalOuters,
+            'total_transfers_sum' => $totalTransfersSum,
+          ]
+        ];
+      });
+
+    $totals = [
+      'total_tresure_count' => $admin->tresures()->count(),
+
+      'total_fund_count' => $tresures->sum(fn($t) => $t['stats']['fund_count']),
+      'total_outgoing'   => $tresures->sum(fn($t) => $t['stats']['total_outgoing']),
+      'total_incoming'   => $tresures->sum(fn($t) => $t['stats']['total_incoming']),
+      'total_inners'     => $tresures->sum(fn($t) => $t['stats']['total_inners']),
+      'total_outers'     => $tresures->sum(fn($t) => $t['stats']['total_outers']),
+      'total_transfers_sum' => $tresures->sum(fn($t) => $t['stats']['total_transfers_sum']),
+    ];
+
+    return response()->json([
+      'admin' => $admin,
+      'tresures' => $tresures,
+      'totals' => $totals,
+    ]);
   }
+
   public function getworkshoptresure(string $id)
   {
     $workshop = Workshop::findOrFail($id);
