@@ -16,7 +16,6 @@ return new class extends Migration
       $table->string('name');
       $table->text('desc')->nullable();
       $table->decimal('amount', 15, 2)->default(0);
-
       $table->foreignId('tresure_id')
         ->references('id')
         ->on('tresures')
