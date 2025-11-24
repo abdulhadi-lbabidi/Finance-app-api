@@ -46,7 +46,7 @@ class MoneyTransfareController extends Controller
 
     if ($from->amount < $data['amount']) {
       return response()->json([
-        'message' => 'Not enough money in the sending fund',
+        'message' => 'الرصيد في الملحق المرسل غير كافٍ',
       ], 400);
     }
 

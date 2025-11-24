@@ -34,9 +34,10 @@ class InnerTransactionController extends Controller
       'name' => ['string', 'required'],
       'desc' => ['string', 'nullable'],
       'payed' => ['boolean', 'required'],
-      'amount' => ['numeric', 'required'],
+      'amount' => ['numeric', 'required', 'min:1'],
       'indate' => ['date', 'required'],
     ]);
+
     $newInner =  InnerTransaction::create($data);
     TresureFund::where('id', $newInner->tresure_fund_id)
       ->increment('amount', $newInner->amount);
@@ -57,11 +58,11 @@ class InnerTransactionController extends Controller
   public function update(Request $request, string $id)
   {
     $data = $request->validate([
-      'name' => ['string', 'required'],
-      'desc' => ['string', 'nullable'],
-      'payed' => ['boolean', 'required'],
-      'amount' => ['numeric', 'required'],
-      'indate' => ['date', 'required'],
+      'name' => ['sometimes', 'string'],
+      'desc' => ['sometimes', 'string', 'nullable'],
+      'payed' => ['sometimes', 'boolean'],
+      'amount' => ['sometimes', 'numeric', 'min:1'],
+      'indate' => ['sometimes', 'date'],
     ]);
 
     $innertrans = InnerTransaction::findOrFail($id);
