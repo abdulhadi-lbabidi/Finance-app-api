@@ -34,9 +34,18 @@ class OuterTransactionController extends Controller
       'name' => ['string', 'required'],
       'desc' => ['string', 'nullable'],
       'payed' => ['boolean', 'required'],
-      'amount' => ['numeric', 'required'],
+      'amount' => ['numeric', 'required', 'min:1'],
       'indate' => ['date', 'required'],
     ]);
+
+    $tresureFund = TresureFund::find($data['tresure_fund_id']);
+
+    if ($data['amount'] > $tresureFund->amount) {
+      return response()->json([
+        'message' => 'لا يوجد مبلغ كافٍ في الصندوق'
+      ], 400);
+    }
+
 
     $outer = OuterTransaction::create($data);
 
@@ -62,11 +71,11 @@ class OuterTransactionController extends Controller
   public function update(Request $request, string $id)
   {
     $data = $request->validate([
-      'name' => ['string', 'required'],
+      'name' => ['string', 'sometimes'],
       'desc' => ['string', 'nullable'],
       'payed' => ['boolean', 'required'],
-      'amount' => ['numeric', 'required'],
-      'indate' => ['date', 'required'],
+      'amount' => ['numeric', 'sometimes', 'min:1'],
+      'indate' => ['date', 'sometimes'],
     ]);
 
     $outertrans = OuterTransaction::findOrFail($id);
