@@ -29,7 +29,6 @@ class TresureController extends Controller
     ], 201);
   }
 
-
   public function update(UpdateTresureRequest $request, Tresure $tresure)
   {
     $tresure->update($request->validated());
@@ -405,6 +404,37 @@ class TresureController extends Controller
       'office' => $office,
       'tresures' => $tresures,
       'totals' => $totals,
+    ]);
+  }
+
+  public function getUsersByType(string $type)
+  {
+    switch ($type) {
+      case 'office':
+        $data = Office::select('id', 'name')->get();
+        break;
+      case 'admin':
+        $data = Admin::select('id', 'name')->get();
+        break;
+
+      case 'employee':
+        $data = Employee::select('id', 'name')->get();
+        break;
+
+      case 'workshop':
+        $data = Workshop::select('id', 'name')->get();
+        break;
+
+      case 'customer':
+        $data = Customer::select('id', 'name')->get();
+        break;
+
+      default:
+        return response()->json(['error' => 'invalid type'], 400);
+    }
+
+    return response()->json([
+      'users' => $data
     ]);
   }
 
