@@ -65,6 +65,7 @@ Route::get('/data/admin/tresure/{id}', [TresureController::class, 'getadmintresu
 Route::get('/data/workshop/tresure/{id}', [TresureController::class, 'getworkshoptresure']);
 Route::get('/data/customer/tresure/{id}', [TresureController::class, 'getcustomertresure']);
 Route::get('/data/employee/tresure/{id}', [TresureController::class, 'getemployeetresure']);
+Route::get('/data/office/tresure/{id}', [TresureController::class, 'getOfficetresure']);
 Route::get('/data/tresurefund/{id}', [TresureController::class, 'getTresureFunds']);
 
 Route::get('/data/tresures-type', [TresureController::class, 'getTresureByType']);
@@ -131,8 +132,8 @@ Route::get('/data/home', [DataController::class, 'home']);
 
 // Mobile
 
-Route::get('/mobile/workshops',[WorkshopController::class,'index']);
-Route::get('/mobile/logisticteams',[LogisticTeamController::class,'index']);
+Route::get('/mobile/workshops', [WorkshopController::class, 'index']);
+Route::get('/mobile/logisticteams', [LogisticTeamController::class, 'index']);
 
 Route::get('/migrate-and-seed', function () {
   Artisan::call('migrate:fresh --seed');

@@ -10,6 +10,7 @@ use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\InnerTransaction;
 use App\Models\MoneyTranfare;
+use App\Models\Office;
 use App\Models\OuterTransaction;
 use App\Models\Tresure;
 use App\Models\Workshop;
@@ -348,37 +349,62 @@ class TresureController extends Controller
       'totals' => $totals,
     ]);
   }
-  public function getTresureFunds(string $id)
+
+  public function getOfficetresure(string $id)
   {
-    $tresure = Tresure::with('tresurefunds.tresure')->findOrFail($id);
-    return response()->json(['funds' => $tresure->tresurefunds]);
-  }
+    $office = Office::findOrFail($id);
 
-  public function getUsersByType(string $type)
-  {
-    switch ($type) {
-      case 'admin':
-        $data = Admin::select('id', 'name')->get();
-        break;
+    $totalTresureCount = $office->tresures()->count();
+    $tresures = $office->tresures()
+      ->with('tresurefunds')
+      ->get()
+      ->map(function ($tresure) {
+        $funds = $tresure->tresurefunds()->pluck('id');
 
-      case 'employee':
-        $data = Employee::select('id', 'name')->get();
-        break;
+        $totalOutgoingTransfers = MoneyTranfare::whereIn('from_tresure_fund_id', $funds)
+          ->sum('amount');
 
-      case 'workshop':
-        $data = Workshop::select('id', 'name')->get();
-        break;
+        $totalIncomingTransfers = MoneyTranfare::whereIn('to_tresure_fund_id', $funds)
+          ->sum('amount');
 
-      case 'customer':
-        $data = Customer::select('id', 'name')->get();
-        break;
+        $totalInners = InnerTransaction::whereIn('tresure_fund_id', $funds)
+          ->sum('amount');
 
-      default:
-        return response()->json(['error' => 'invalid type'], 400);
-    }
+        $totalOuters = OuterTransaction::whereIn('tresure_fund_id', $funds)
+          ->sum('amount');
+
+        $fundCount = $tresure->tresurefunds()->count();
+
+        $totalTransfersSum = $totalOutgoingTransfers + $totalIncomingTransfers;
+
+        return [
+          'tresure' => $tresure,
+          'stats' => [
+            'fund_count' => $fundCount,
+            'total_outgoing' => $totalOutgoingTransfers,
+            'total_incoming' => $totalIncomingTransfers,
+            'total_inners' => $totalInners,
+            'total_outers' => $totalOuters,
+            'total_transfers_sum' => $totalTransfersSum,
+          ]
+        ];
+      });
+
+    $totals = [
+      'total_tresure_count' => $office->tresures()->count(),
+
+      'total_fund_count' => $tresures->sum(fn($t) => $t['stats']['fund_count']),
+      'total_outgoing'   => $tresures->sum(fn($t) => $t['stats']['total_outgoing']),
+      'total_incoming'   => $tresures->sum(fn($t) => $t['stats']['total_incoming']),
+      'total_inners'     => $tresures->sum(fn($t) => $t['stats']['total_inners']),
+      'total_outers'     => $tresures->sum(fn($t) => $t['stats']['total_outers']),
+      'total_transfers_sum' => $tresures->sum(fn($t) => $t['stats']['total_transfers_sum']),
+    ];
 
     return response()->json([
-      'users' => $data
+      'office' => $office,
+      'tresures' => $tresures,
+      'totals' => $totals,
     ]);
   }
 

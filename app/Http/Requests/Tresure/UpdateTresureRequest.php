@@ -25,7 +25,7 @@ class UpdateTresureRequest extends FormRequest
       'name' => 'sometimes|string|max:255',
       'active' => 'sometimes|boolean',
       'tresureable_id' => 'sometimes|integer',
-      'tresureable_type' => 'required|string|in:admin,customer,workshop,employee',
+      'tresureable_type' => 'required|string|in:admin,customer,workshop,employee,office',
 
     ];
   }

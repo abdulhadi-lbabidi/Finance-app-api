@@ -7,25 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Office extends Model
 {
-    /** @use HasFactory<\Database\Factories\OfficeFactory> */
-    use HasFactory;
+  /** @use HasFactory<\Database\Factories\OfficeFactory> */
+  use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'address',
-        'location',
-    ];
+  protected $fillable = [
+    'name',
+    'address',
+    'location',
+  ];
 
-        public function tresure()
-    {
-        return $this->morphOne(Tresure::class, 'tresureable');
-    }
-        public function documents()
-    {
-        return $this->morphMany(Document::class, 'doucumentable');
-    }
-    public function inventories()
-    {
-        return $this->morphMany(Inventory::class, 'invetorable');
-    }
+
+  public function tresures()
+  {
+    return $this->morphMany(Tresure::class, 'tresureable');
+  }
+  public function documents()
+  {
+    return $this->morphMany(Document::class, 'doucumentable');
+  }
+  public function inventories()
+  {
+    return $this->morphMany(Inventory::class, 'invetorable');
+  }
 }

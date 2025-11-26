@@ -18,17 +18,17 @@ class OfficeSeeder extends Seeder
       'address' => 'المحافظة - جانب مغسلة المحافظة',
       'location' => 'ss2',
     ]);
-    $tresure = $office->tresure()->create([
-      'name' => 'أساسي',
-      'active' => true,
-    ]);
-    $tresure2 = $office->tresure()->create([
-      'name' => 'مدفوعات موظفين',
-      'active' => true,
-    ]);
-    $tresurefund = $tresure2->tresurefunds()->create([
-      'name' => '2025',
-      'desc' => 'رواتب موظفين سنة 2025',
-    ]);
+    // $tresure = $office->tresures()->create([
+    //   'name' => 'أساسي',
+    //   'active' => true,
+    // ]);
+    // $tresure2 = $office->tresures()->create([
+    //   'name' => 'مدفوعات موظفين',
+    //   'active' => true,
+    // ]);
+    // $tresurefund = $tresure2->tresurefunds()->create([
+    //   'name' => '2025',
+    //   'desc' => 'رواتب موظفين سنة 2025',
+    // ]);
   }
 }

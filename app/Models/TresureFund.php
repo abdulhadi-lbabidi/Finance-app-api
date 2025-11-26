@@ -17,7 +17,7 @@ class TresureFund extends Model
     'tresure_id',
   ];
 
-  public function tresure()
+  public function tresures()
   {
     return $this->belongsTo(Tresure::class);
   }
