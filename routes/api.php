@@ -66,6 +66,7 @@ Route::get('/data/workshop/tresure/{id}', [TresureController::class, 'getworksho
 Route::get('/data/customer/tresure/{id}', [TresureController::class, 'getcustomertresure']);
 Route::get('/data/employee/tresure/{id}', [TresureController::class, 'getemployeetresure']);
 Route::get('/data/office/tresure/{id}', [TresureController::class, 'getOfficetresure']);
+Route::get('/data/deposit/tresure/{id}', [TresureController::class, 'getDeposittresure']);
 Route::get('/data/tresurefund/{id}', [DataController::class, 'getTresureFunds']);
 
 Route::get('/data/tresures-type', [TresureController::class, 'getTresureByType']);

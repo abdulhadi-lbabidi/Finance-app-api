@@ -25,7 +25,7 @@ class CreateTresureRequest extends FormRequest
       'name' => 'required|string|max:255',
       'active' => 'required|boolean',
       'tresureable_id' => 'required|integer',
-      'tresureable_type' => 'required|string|in:admin,customer,workshop,employee,office',
+      'tresureable_type' => 'required|string|in:admin,customer,workshop,employee,office,deposit',
     ];
   }
 }

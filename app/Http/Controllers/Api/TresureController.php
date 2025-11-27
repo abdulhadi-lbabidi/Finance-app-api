@@ -7,6 +7,7 @@ use App\Http\Requests\Tresure\CreateTresureRequest;
 use App\Http\Requests\Tresure\UpdateTresureRequest;
 use App\Models\Admin;
 use App\Models\Customer;
+use App\Models\Deposit;
 use App\Models\Employee;
 use App\Models\InnerTransaction;
 use App\Models\MoneyTranfare;
@@ -84,11 +85,17 @@ class TresureController extends Controller
     ]);
   }
 
-
-
   public function getTresureByType()
   {
-    $types = Tresure::pluck('tresureable_type')->unique()->values();
+    // $types = Tresure::pluck('tresureable_type')->unique()->values();
+    $types = [
+      "admin",
+      "customer",
+      "office",
+      "workshop",
+      "employee",
+      "deposit",
+    ];
 
     return response()->json(['truserTtype' => $types]);
   }
@@ -349,6 +356,63 @@ class TresureController extends Controller
     ]);
   }
 
+  public function getDeposittresure(string $id)
+  {
+    $deposit = Deposit::findOrFail($id);
+
+    $totalTresureCount = $deposit->tresures()->count();
+    $tresures = $deposit->tresures()
+      ->with('tresurefunds')
+      ->get()
+      ->map(function ($tresure) {
+        $funds = $tresure->tresurefunds()->pluck('id');
+
+        $totalOutgoingTransfers = MoneyTranfare::whereIn('from_tresure_fund_id', $funds)
+          ->sum('amount');
+
+        $totalIncomingTransfers = MoneyTranfare::whereIn('to_tresure_fund_id', $funds)
+          ->sum('amount');
+
+        $totalInners = InnerTransaction::whereIn('tresure_fund_id', $funds)
+          ->sum('amount');
+
+        $totalOuters = OuterTransaction::whereIn('tresure_fund_id', $funds)
+          ->sum('amount');
+
+        $fundCount = $tresure->tresurefunds()->count();
+
+        $totalTransfersSum = $totalOutgoingTransfers + $totalIncomingTransfers;
+
+        return [
+          'tresure' => $tresure,
+          'stats' => [
+            'fund_count' => $fundCount,
+            'total_outgoing' => $totalOutgoingTransfers,
+            'total_incoming' => $totalIncomingTransfers,
+            'total_inners' => $totalInners,
+            'total_outers' => $totalOuters,
+            'total_transfers_sum' => $totalTransfersSum,
+          ]
+        ];
+      });
+
+    $totals = [
+      'total_tresure_count' => $deposit->tresures()->count(),
+
+      'total_fund_count' => $tresures->sum(fn($t) => $t['stats']['fund_count']),
+      'total_outgoing'   => $tresures->sum(fn($t) => $t['stats']['total_outgoing']),
+      'total_incoming'   => $tresures->sum(fn($t) => $t['stats']['total_incoming']),
+      'total_inners'     => $tresures->sum(fn($t) => $t['stats']['total_inners']),
+      'total_outers'     => $tresures->sum(fn($t) => $t['stats']['total_outers']),
+      'total_transfers_sum' => $tresures->sum(fn($t) => $t['stats']['total_transfers_sum']),
+    ];
+
+    return response()->json([
+      'deposit' => $deposit,
+      'tresures' => $tresures,
+      'totals' => $totals,
+    ]);
+  }
   public function getOfficetresure(string $id)
   {
     $office = Office::findOrFail($id);
@@ -427,6 +491,9 @@ class TresureController extends Controller
 
       case 'customer':
         $data = Customer::select('id', 'name')->get();
+        break;
+      case 'deposit':
+        $data = Deposit::select('id', 'name')->get();
         break;
 
       default:

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use App\Models\Customer;
+use App\Models\Deposit;
 use App\Models\Employee;
 use App\Models\InnerTransaction;
 use App\Models\Invoice;
@@ -35,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
       'invoice' => Invoice::class,
       'customer' => Customer::class,
       'admin' => Admin::class,
+      'deposit' => Deposit::class,
       'workshop' => Workshop::class,
       'office' => Office::class,
       'innerTransaction' => InnerTransaction::class,

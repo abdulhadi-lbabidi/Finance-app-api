@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Customer;
+use App\Models\Deposit;
 use App\Models\Employee;
 use App\Models\EmployeePay;
 use App\Models\FinanceItem;
@@ -61,6 +62,9 @@ class DataController extends Controller
           break;
         case 'employee':
           $type = Employee::all();
+          break;
+        case 'deposit':
+          $type = Deposit::all();
           break;
       }
     } catch (\Throwable $th) {
