@@ -72,6 +72,27 @@ class TresureFundController extends Controller
 
 
 
+  public function getTresureFundsByMoneyTransferId(string $moneyTransferId)
+  {
+
+
+    $transfer = MoneyTranfare::with([
+      'fromtresurefund',
+      'totresurefund'
+    ])->findOrFail($moneyTransferId);
+
+    $fromTresureId = $transfer->fromtresurefund->tresure_id;
+    $toTresureId = $transfer->totresurefund->tresure_id;
+
+    $funds = TresureFund::whereIn('tresure_id', [$fromTresureId, $toTresureId])
+      ->select('id', 'name')
+      ->get();
+
+    return response()->json([
+      'funds' => $funds
+    ]);
+  }
+
   public function getTresureFundsByTresureId(string $tresure_id)
   {
     $funds = TresureFund::where('tresure_id', $tresure_id)

@@ -29,4 +29,14 @@ class TresureFund extends Model
   {
     return $this->hasMany(MoneyTranfare::class, 'from_tresure_fund_id');
   }
+
+  public function innerTransactions()
+  {
+    return $this->hasMany(InnerTransaction::class, 'tresure_fund_id');
+  }
+
+  public function outerTransactions()
+  {
+    return $this->hasMany(OuterTransaction::class, 'tresure_fund_id');
+  }
 }

@@ -76,6 +76,7 @@ Route::get('/data/users/by-type/{type}', [TresureController::class, 'getUsersByT
 Route::get('/data/tresures/by-user/{user_id}/{type}', [TresureController::class, 'getTresuresByUser']);
 //get tresures funds by tresure
 Route::get('/data/tresure-funds/{tresure_id}', [TresureFundController::class, 'getTresureFundsByTresureId']);
+Route::get('/data/tresure-funds/by-money-transfer/{money_transfer_id}', [TresureFundController::class, 'getTresureFundsByMoneyTransferId']);
 
 Route::post('/data/tresure', [TresureController::class, 'store']);
 Route::get('/data/tresure/{tresure}', [TresureController::class, 'show']);
@@ -108,7 +109,7 @@ Route::apiResource('/data/invoice-items', InvoiceItemController::class);
 
 
 // Reports
-Route::get('/data/report/workshop/itemreport', [ReportsController::class, 'getItemsReport']);
+Route::get('/data/tresure-fund/{tresure_id}/report', [ReportsController::class, 'getTresureFundReport']);
 
 
 // TechnicalTeam
