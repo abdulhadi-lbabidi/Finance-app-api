@@ -14,6 +14,7 @@ class ReportsController extends Controller
 
     $outerTransactions = OuterTransaction::where('tresure_fund_id', $tresure_fund_id)
       ->with([
+        'invoices.financeitem',
         'invoices.invoiceitem',
       ])
       ->get();
@@ -21,7 +22,12 @@ class ReportsController extends Controller
     $items = $outerTransactions
       ->flatMap(function ($outer) {
         return $outer->invoices->flatMap(function ($invoice) {
-          return $invoice->invoiceitem;
+          return $invoice->invoiceitem->map(function ($item) use ($invoice) {
+
+            $item->finance_item_name = $invoice->financeitem->name ?? null;
+
+            return $item;
+          });
         });
       })
       ->values();
