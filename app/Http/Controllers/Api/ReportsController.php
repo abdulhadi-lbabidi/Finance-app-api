@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\OuterTransaction;
+use App\Models\Tresure;
 use App\Models\TresureFund;
 
 class ReportsController extends Controller
@@ -37,6 +38,38 @@ class ReportsController extends Controller
       'tresure_fund' => $tresureFund,
       'outer_transactions' => $outerTransactions,
       'items' => $items,
+    ]);
+  }
+
+
+  public function getTresureFundsReport(string $tresure_id)
+  {
+
+    $tresure = Tresure::findOrFail($tresure_id);
+
+    $funds = $tresure->tresurefunds()
+      ->with([
+        'outerTransactions.invoices.financeitem',
+        'outerTransactions.invoices.invoiceitem',
+      ])
+      ->get();
+
+    $items = $funds->flatMap(function ($fund) {
+      return $fund->outerTransactions->flatMap(function ($outer) {
+        return $outer->invoices->flatMap(function ($invoice) {
+          return $invoice->invoiceitem->map(function ($item) use ($invoice) {
+            $item->finance_item_name = $invoice->financeitem->name ?? null;
+            return $item;
+          });
+        });
+      });
+    })->values();
+
+    return response()->json([
+      "message" => "success",
+      "tresure" => $tresure,
+      "funds" => $funds,
+      "items" => $items,
     ]);
   }
 }
