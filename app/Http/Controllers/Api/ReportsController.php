@@ -72,4 +72,70 @@ class ReportsController extends Controller
       "items" => $items,
     ]);
   }
+
+
+  public function getTresuresReport(string $user_type, string $user_id)
+  {
+    $tresures = Tresure::where('tresureable_type', $user_type)
+      ->where('tresureable_id', $user_id)
+      ->get();
+
+
+    $funds = TresureFund::whereIn('tresure_id', $tresures->pluck('id'))
+      ->with([
+        'outerTransactions.invoices.financeitem',
+        'outerTransactions.invoices.invoiceitem',
+      ])
+      ->get();
+
+    $items = $funds->flatMap(function ($fund) {
+      return $fund->outerTransactions->flatMap(function ($outer) {
+        return $outer->invoices->flatMap(function ($invoice) {
+          return $invoice->invoiceitem->map(function ($item) use ($invoice) {
+            $item->finance_item_name = $invoice->financeitem->name ?? null;
+            return $item;
+          });
+        });
+      });
+    })->values();
+
+    return response()->json([
+      "message"   => "success",
+      "tresures"  => $tresures,
+      "funds"     => $funds,
+      "items"     => $items,
+    ]);
+  }
+
+  public function getTresuresforAllusersReport(string $user_type)
+  {
+
+    $tresures = Tresure::where('tresureable_type', $user_type)->get();
+
+    $funds = TresureFund::whereIn('tresure_id', $tresures->pluck('id'))
+      ->with([
+        'outerTransactions.invoices.financeitem',
+        'outerTransactions.invoices.invoiceitem',
+      ])
+      ->get();
+
+
+    $items = $funds->flatMap(function ($fund) {
+      return $fund->outerTransactions->flatMap(function ($outer) {
+        return $outer->invoices->flatMap(function ($invoice) {
+          return $invoice->invoiceitem->map(function ($item) use ($invoice) {
+            $item->finance_item_name = $invoice->financeitem->name ?? null;
+            return $item;
+          });
+        });
+      });
+    })->values();
+
+    return response()->json([
+      "message"   => "success",
+      "tresures"  => $tresures,
+      "funds"     => $funds,
+      "items"     => $items,
+    ]);
+  }
 }

@@ -109,8 +109,10 @@ Route::apiResource('/data/invoice-items', InvoiceItemController::class);
 
 
 // Reports
+Route::get('/data/tresure-funds/{user_type}/users/report', [ReportsController::class, 'getTresuresforAllusersReport']);
 Route::get('/data/tresure-fund/{tresure_id}/report', [ReportsController::class, 'getTresureFundReport']);
 Route::get('/data/tresure-funds/{tresure_id}/report', [ReportsController::class, 'getTresureFundsReport']);
+Route::get('/data/tresure-funds/{user_type}/{user_id}/report', [ReportsController::class, 'getTresuresReport']);
 
 
 // TechnicalTeam
