@@ -10,19 +10,19 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AdminFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
-        return [
-            'name'=> fake()->name,
-            'address'=>fake()->address,
-            'admin_level'=> fake()->name,
-            'department'=> fake()->name,
-            'admintype_id'=>AdminType::all()->random()->id
-        ];
-    }
+  /**
+   * Define the model's default state.
+   *
+   * @return array<string, mixed>
+   */
+  public function definition(): array
+  {
+    return [
+      'name' => fake()->name,
+      'address' => fake()->address,
+      'admin_level' => fake()->name,
+      'department' => fake()->name,
+      'admintype_id' => AdminType::all()->random()->id
+    ];
+  }
 }

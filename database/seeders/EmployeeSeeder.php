@@ -28,6 +28,7 @@ class EmployeeSeeder extends Seeder
     //     'desc'=>fake()->text(),
     // ]);
     $emp1->user()->create([
+      'name' => $emp1->name,
       'email' => 'hatem.alsaleh@nouhagency.com',
       'password' => bcrypt('1234.4321A'),
     ]);
@@ -50,6 +51,8 @@ class EmployeeSeeder extends Seeder
     //   'desc' => fake()->text(),
     // ]);
     $emp2->user()->create([
+      'name' => $emp1->name,
+
       'email' => 'abdalhadi.lbabidi@nouhagency.com',
       'password' => bcrypt('1234.4321A'),
     ]);
@@ -72,6 +75,8 @@ class EmployeeSeeder extends Seeder
     //   'desc' => fake()->text(),
     // ]);
     $emp3->user()->create([
+      'name' => $emp1->name,
+
       'email' => 'ahmad.shahrour@nouhagency.com',
       'password' => bcrypt('1234.4321A'),
     ]);
@@ -94,6 +99,8 @@ class EmployeeSeeder extends Seeder
     //   'desc' => fake()->text(),
     // ]);
     $emp4->user()->create([
+      'name' => $emp1->name,
+
       'email' => 'rami.alaya@nouhagency.com',
       'password' => bcrypt('1234.4321A'),
     ]);

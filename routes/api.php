@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\AdminTypeController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DataController;
 use App\Http\Controllers\Api\DepartmentController;
@@ -34,6 +35,15 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('/user', function (Request $request) {
   return $request->user();
 })->middleware('auth:sanctum');
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->group(function () {
+  Route::get('/me', [AuthController::class, 'me']);
+});
+
+
+
 
 Route::apiResource('/data/admin', AdminController::class);
 Route::apiResource('/data/admintype', AdminTypeController::class);

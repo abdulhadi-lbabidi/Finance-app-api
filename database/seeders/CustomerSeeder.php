@@ -18,6 +18,7 @@ class CustomerSeeder extends Seeder
       'address' => 'حلب-حلب الجديدة حنوبي جامع الرحمة',
     ]);
     $customer->user()->create([
+      'name' =>$customer->name,
       'email' => 'ammar.krkr@nouhagency.com',
       'password' => bcrypt('1234.4321A'),
     ]);

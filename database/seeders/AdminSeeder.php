@@ -29,6 +29,7 @@ class AdminSeeder extends Seeder
     //     'desc'=>fake()->text(),
     // ]);
     $user = $admin->user()->create([
+      'name' => $admin->name,
       'email' => 'abdalrahman.nouh@nouhagency.com',
       'password' => bcrypt('1234.4321A'),
     ]);
